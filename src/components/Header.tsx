@@ -1,269 +1,292 @@
 import {
-  createStyles,
-  Header,
-  HoverCard,
-  Group,
-  Button,
-  UnstyledButton,
-  Text,
-  SimpleGrid,
-  ThemeIcon,
-  Anchor,
-  Divider,
-  Center,
   Box,
-  Burger,
-  Drawer,
+  Flex,
+  Text,
+  IconButton,
+  Button,
+  Stack,
   Collapse,
-  ScrollArea,
-} from '@mantine/core';
-import { MantineLogo } from '@mantine/ds';
-import { useDisclosure } from '@mantine/hooks';
+  Icon,
+  Link,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  useColorModeValue,
+  useBreakpointValue,
+  useDisclosure,
+} from '@chakra-ui/react';
 import {
-  IconNotification,
-  IconCode,
-  IconBook,
-  IconChartPie3,
-  IconFingerprint,
-  IconCoin,
-  IconChevronDown,
-} from '@tabler/icons';
+  HamburgerIcon,
+  CloseIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+} from '@chakra-ui/icons';
 
-const useStyles = createStyles((theme) => ({
-  link: {
-    display: 'flex',
-    alignItems: 'center',
-    height: '100%',
-    paddingLeft: theme.spacing.md,
-    paddingRight: theme.spacing.md,
-    textDecoration: 'none',
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-    fontWeight: 500,
-    fontSize: theme.fontSizes.sm,
-
-    [theme.fn.smallerThan('sm')]: {
-      height: 42,
-      display: 'flex',
-      alignItems: 'center',
-      width: '100%',
-    },
-
-    ...theme.fn.hover({
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-    }),
-  },
-
-  subLink: {
-    width: '100%',
-    padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
-    borderRadius: theme.radius.md,
-
-    ...theme.fn.hover({
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
-    }),
-
-    '&:active': theme.activeStyles,
-  },
-
-  dropdownFooter: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
-    margin: -theme.spacing.md,
-    marginTop: theme.spacing.sm,
-    padding: `${theme.spacing.md}px ${theme.spacing.md * 2}px`,
-    paddingBottom: theme.spacing.xl,
-    borderTop: `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
-      }`,
-  },
-
-  hiddenMobile: {
-    [theme.fn.smallerThan('sm')]: {
-      display: 'none',
-    },
-  },
-
-  hiddenDesktop: {
-    [theme.fn.largerThan('sm')]: {
-      display: 'none',
-    },
-  },
-}));
-
-const mockdata = [
-  {
-    icon: IconCode,
-    title: 'Open source',
-    description: 'This Pokémon’s cry is very loud and distracting',
-  },
-  {
-    icon: IconCoin,
-    title: 'Free for everyone',
-    description: 'The fluid of Smeargle’s tail secretions changes',
-  },
-  {
-    icon: IconBook,
-    title: 'Documentation',
-    description: 'Yanma is capable of seeing 360 degrees without',
-  },
-  {
-    icon: IconFingerprint,
-    title: 'Security',
-    description: 'The shell’s rounded shape and the grooves on its.',
-  },
-  {
-    icon: IconChartPie3,
-    title: 'Analytics',
-    description: 'This Pokémon uses its flying ability to quickly chase',
-  },
-  {
-    icon: IconNotification,
-    title: 'Notifications',
-    description: 'Combusken battles with the intensely hot flames it spews',
-  },
-];
-
-export function HeaderMegaMenu() {
-  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
-  const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
-  const { classes, theme } = useStyles();
-
-  const links = mockdata.map((item) => (
-    <UnstyledButton className={classes.subLink} key={item.title}>
-      <Group noWrap align="flex-start">
-        <ThemeIcon size={34} variant="default" radius="md">
-          {/* <item.icon
-          size={22} 
-          color={theme.fn.primaryColor()} 
-          /> */}
-        </ThemeIcon>
-        <div>
-          <Text size="sm" weight={500}>
-            {item.title}
-          </Text>
-          <Text size="xs" color="dimmed">
-            {item.description}
-          </Text>
-        </div>
-      </Group>
-    </UnstyledButton>
-  ));
+export default function Header() {
+  const { isOpen, onToggle } = useDisclosure();
 
   return (
-    <Box pb={120}>
-      <Header height={60} px="md">
-        <Group position="apart" sx={{ height: '100%' }}>
-          <MantineLogo size={30} />
+    <Box>
+      <Flex
+        bg={useColorModeValue('white', 'gray.800')}
+        color={useColorModeValue('gray.600', 'white')}
+        minH={'60px'}
+        py={{ base: 2 }}
+        px={{ base: 4 }}
+        borderBottom={1}
+        borderStyle={'solid'}
+        borderColor={useColorModeValue('gray.200', 'gray.900')}
+        align={'center'}>
+        <Flex
+          flex={{ base: 1, md: 'auto' }}
+          ml={{ base: -2 }}
+          display={{ base: 'flex', md: 'none' }}>
+          <IconButton
+            onClick={onToggle}
+            icon={
+              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
+            }
+            variant={'ghost'}
+            aria-label={'Toggle Navigation'}
+          />
+        </Flex>
+        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
+          <Text
+            textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
+            fontFamily={'heading'}
+            color={useColorModeValue('gray.800', 'white')}>
+            Logo
+          </Text>
 
-          <Group sx={{ height: '100%' }} spacing={0} className={classes.hiddenMobile}>
-            <a href="#" className={classes.link}>
-              Home
-            </a>
-            <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
-              <HoverCard.Target>
-                <a href="#" className={classes.link}>
-                  <Center inline>
-                    <Box component="span" mr={5}>
-                      Features
-                    </Box>
-                    <IconChevronDown
-                    // size={16} 
-                    // color={theme.fn.primaryColor()} 
-                    />
-                  </Center>
-                </a>
-              </HoverCard.Target>
+          <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
+            <DesktopNav />
+          </Flex>
+        </Flex>
 
-              <HoverCard.Dropdown sx={{ overflow: 'hidden' }}>
-                <Group position="apart" px="md">
-                  <Text weight={500}>Features</Text>
-                  <Anchor href="#" size="xs">
-                    View all
-                  </Anchor>
-                </Group>
+        <Stack
+          flex={{ base: 1, md: 0 }}
+          justify={'flex-end'}
+          direction={'row'}
+          spacing={6}>
+          <Button
+            as={'a'}
+            fontSize={'sm'}
+            fontWeight={400}
+            variant={'link'}
+            href={'#'}>
+            Sign In
+          </Button>
+          <Button
+            as={'a'}
+            display={{ base: 'none', md: 'inline-flex' }}
+            fontSize={'sm'}
+            fontWeight={600}
+            color={'white'}
+            bg={'pink.400'}
+            href={'#'}
+            _hover={{
+              bg: 'pink.300',
+            }}>
+            Sign Up
+          </Button>
+        </Stack>
+      </Flex>
 
-                <Divider
-                  my="sm"
-                  mx="-md"
-                  color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
-                />
-
-                <SimpleGrid cols={2} spacing={0}>
-                  {links}
-                </SimpleGrid>
-
-                <div className={classes.dropdownFooter}>
-                  <Group position="apart">
-                    <div>
-                      <Text weight={500} size="sm">
-                        Get started
-                      </Text>
-                      <Text size="xs" color="dimmed">
-                        Their food sources have decreased, and their numbers
-                      </Text>
-                    </div>
-                    <Button variant="default">Get started</Button>
-                  </Group>
-                </div>
-              </HoverCard.Dropdown>
-            </HoverCard>
-            <a href="#" className={classes.link}>
-              Learn
-            </a>
-            <a href="#" className={classes.link}>
-              Academy
-            </a>
-          </Group>
-
-          <Group className={classes.hiddenMobile}>
-            <Button variant="default">Log in</Button>
-            <Button>Sign up</Button>
-          </Group>
-
-          <Burger opened={drawerOpened} onClick={toggleDrawer} className={classes.hiddenDesktop} />
-        </Group>
-      </Header>
-
-      <Drawer
-        opened={drawerOpened}
-        onClose={closeDrawer}
-        size="100%"
-        padding="md"
-        title="Navigation"
-        className={classes.hiddenDesktop}
-        zIndex={1000000}
-      >
-        <ScrollArea sx={{ height: 'calc(100vh - 60px)' }} mx="-md">
-          <Divider my="sm" color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'} />
-
-          <a href="#" className={classes.link}>
-            Home
-          </a>
-          <UnstyledButton className={classes.link} onClick={toggleLinks}>
-            <Center inline>
-              <Box component="span" mr={5}>
-                Features
-              </Box>
-              <IconChevronDown
-              // size={16} 
-              // color={theme.fn.primaryColor()} 
-              />
-            </Center>
-          </UnstyledButton>
-          <Collapse in={linksOpened}>{links}</Collapse>
-          <a href="#" className={classes.link}>
-            Learn
-          </a>
-          <a href="#" className={classes.link}>
-            Academy
-          </a>
-
-          <Divider my="sm" color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'} />
-
-          <Group position="center" grow pb="xl" px="md">
-            <Button variant="default">Log in</Button>
-            <Button>Sign up</Button>
-          </Group>
-        </ScrollArea>
-      </Drawer>
+      <Collapse in={isOpen} animateOpacity>
+        <MobileNav />
+      </Collapse>
     </Box>
   );
 }
+
+const DesktopNav = () => {
+  const linkColor = useColorModeValue('gray.600', 'gray.200');
+  const linkHoverColor = useColorModeValue('gray.800', 'white');
+  const popoverContentBgColor = useColorModeValue('white', 'gray.800');
+
+  return (
+    <Stack direction={'row'} spacing={4}>
+      {NAV_ITEMS.map((navItem) => (
+        <Box key={navItem.label}>
+          <Popover trigger={'hover'} placement={'bottom-start'}>
+            <PopoverTrigger>
+              <Link
+                p={2}
+                href={navItem.href ?? '#'}
+                fontSize={'sm'}
+                fontWeight={500}
+                color={linkColor}
+                _hover={{
+                  textDecoration: 'none',
+                  color: linkHoverColor,
+                }}>
+                {navItem.label}
+              </Link>
+            </PopoverTrigger>
+
+            {navItem.children && (
+              <PopoverContent
+                border={0}
+                boxShadow={'xl'}
+                bg={popoverContentBgColor}
+                p={4}
+                rounded={'xl'}
+                minW={'sm'}>
+                <Stack>
+                  {navItem.children.map((child) => (
+                    <DesktopSubNav key={child.label} {...child} />
+                  ))}
+                </Stack>
+              </PopoverContent>
+            )}
+          </Popover>
+        </Box>
+      ))}
+    </Stack>
+  );
+};
+
+const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
+  return (
+    <Link
+      href={href}
+      role={'group'}
+      display={'block'}
+      p={2}
+      rounded={'md'}
+      _hover={{ bg: useColorModeValue('pink.50', 'gray.900') }}>
+      <Stack direction={'row'} align={'center'}>
+        <Box>
+          <Text
+            transition={'all .3s ease'}
+            _groupHover={{ color: 'pink.400' }}
+            fontWeight={500}>
+            {label}
+          </Text>
+          <Text fontSize={'sm'}>{subLabel}</Text>
+        </Box>
+        <Flex
+          transition={'all .3s ease'}
+          transform={'translateX(-10px)'}
+          opacity={0}
+          _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
+          justify={'flex-end'}
+          align={'center'}
+          flex={1}>
+          <Icon color={'pink.400'} w={5} h={5} as={ChevronRightIcon} />
+        </Flex>
+      </Stack>
+    </Link>
+  );
+};
+
+const MobileNav = () => {
+  return (
+    <Stack
+      bg={useColorModeValue('white', 'gray.800')}
+      p={4}
+      display={{ md: 'none' }}>
+      {NAV_ITEMS.map((navItem) => (
+        <MobileNavItem key={navItem.label} {...navItem} />
+      ))}
+    </Stack>
+  );
+};
+
+const MobileNavItem = ({ label, children, href }: NavItem) => {
+  const { isOpen, onToggle } = useDisclosure();
+
+  return (
+    <Stack spacing={4} onClick={children && onToggle}>
+      <Flex
+        py={2}
+        as={Link}
+        href={href ?? '#'}
+        justify={'space-between'}
+        align={'center'}
+        _hover={{
+          textDecoration: 'none',
+        }}>
+        <Text
+          fontWeight={600}
+          color={useColorModeValue('gray.600', 'gray.200')}>
+          {label}
+        </Text>
+        {children && (
+          <Icon
+            as={ChevronDownIcon}
+            transition={'all .25s ease-in-out'}
+            transform={isOpen ? 'rotate(180deg)' : ''}
+            w={6}
+            h={6}
+          />
+        )}
+      </Flex>
+
+      <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
+        <Stack
+          mt={2}
+          pl={4}
+          borderLeft={1}
+          borderStyle={'solid'}
+          borderColor={useColorModeValue('gray.200', 'gray.700')}
+          align={'start'}>
+          {children &&
+            children.map((child) => (
+              <Link key={child.label} py={2} href={child.href}>
+                {child.label}
+              </Link>
+            ))}
+        </Stack>
+      </Collapse>
+    </Stack>
+  );
+};
+
+interface NavItem {
+  label: string;
+  subLabel?: string;
+  children?: Array<NavItem>;
+  href?: string;
+}
+
+const NAV_ITEMS: Array<NavItem> = [
+  {
+    label: 'Inspiration',
+    children: [
+      {
+        label: 'Explore Design Work',
+        subLabel: 'Trending Design to inspire you',
+        href: '#',
+      },
+      {
+        label: 'New & Noteworthy',
+        subLabel: 'Up-and-coming Designers',
+        href: '#',
+      },
+    ],
+  },
+  {
+    label: 'Find Work',
+    children: [
+      {
+        label: 'Job Board',
+        subLabel: 'Find your dream design job',
+        href: '#',
+      },
+      {
+        label: 'Freelance Projects',
+        subLabel: 'An exclusive list for contract work',
+        href: '#',
+      },
+    ],
+  },
+  {
+    label: 'Learn Design',
+    href: '#',
+  },
+  {
+    label: 'Hire Designers',
+    href: '#',
+  },
+];
