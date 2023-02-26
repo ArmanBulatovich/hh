@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { Route, Navigate, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
-import { useQuery, useMutation, useQueryClient, QueryClient, QueryClientProvider } from 'react-query'
+import { QueryClient, QueryClientProvider } from 'react-query'
 import { useSnapshot } from 'valtio'
 import { Box } from '@chakra-ui/react'
 
@@ -8,10 +8,11 @@ import Footer from "./components/Footer"
 import Header from "./components/Header"
 import Login from "./pages/AuthPages/Login"
 import Register from "./pages/AuthPages/Register"
-import ErrorPage from './pages/ErrorPage/ErrorPage';
+import ErrorPage from './pages/ErrorPage/ErrorPage'
 import HomePage from "./pages/HomePage/HomePage"
-import ProfilePage from "./pages/Profile/ProfilePage";
-import { store } from './store';
+import ProfilePage from "./pages/Profile/ProfilePage"
+import { store } from './store/store'
+import { AuthContext } from "./context/AuthContextProvider"
 
 
 const router = createBrowserRouter([
@@ -64,13 +65,29 @@ const privateRouter = createBrowserRouter([
 
 function App() {
   const queryClient = new QueryClient();
+  const authContext = useContext(AuthContext);
   const { isAuthenticated } = useSnapshot(store.auth);
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    if (token) {
+      store.auth.isAuthenticated = true;
+    } {
+      store.auth.isAuthenticated = false;
+    }
+  }, [])
 
   return (
     <QueryClientProvider client={queryClient} >
       <Header />
       <Box pt='50px'>
-        <RouterProvider router={isAuthenticated ? privateRouter : router} />
+        {
+          authContext.isAuthenticated ? (
+            <RouterProvider router={privateRouter} />
+          ) : (
+            <RouterProvider router={router} />
+          )
+        }
       </Box>
       <Box bottom={0} position="fixed" width='100%'><Footer /></Box>
     </QueryClientProvider>

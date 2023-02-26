@@ -1,5 +1,7 @@
 import { proxy } from 'valtio';
 
+const token = localStorage.getItem('token');
+
 interface AuthState {
   isAuthenticated: boolean;
 }
@@ -16,7 +18,7 @@ interface AppState {
 
 export const store = proxy<AppState>({
   auth: {
-    isAuthenticated: true,
+    isAuthenticated: false,
   },
   user: {
     name: '',
