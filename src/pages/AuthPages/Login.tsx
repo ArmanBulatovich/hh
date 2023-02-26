@@ -3,8 +3,10 @@ import { Flex, Box, FormControl, FormLabel, Input, Checkbox, Stack, Link, Button
 import { useMutation } from 'react-query';
 import { expressService } from '../../axiosConfig';
 import { useNavigate } from 'react-router-dom';
+import CustomInput from '../../ui/Input';
 
 type LoginFormValues = {
+  [x: string]: any;
   email: string;
   password: string;
   accessToken: string;
@@ -15,21 +17,14 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [token, setToken] = useState('');
-  const [data1, setData1] = useState<any>({});
 
-  useEffect(() => {
-    setToken(data1.data.accessToken);
-    localStorage.setItem('token', token);
-  }, [token, data1])
+
 
   const loginMutation = useMutation<LoginFormValues, Error, { email: string, password: string }>(
     ({ email, password }) => expressService.post('auth/login', { email, password }).then((response) => response.data),
     {
       onSuccess: (data) => {
-        // console.log(JSON.stringify(data.accessToken));
-        // localStorage.setItem('token', JSON.stringify(data.accessToken));
-        setData1(data);
+        localStorage.setItem('token', JSON.stringify(data.data.accessToken));
         navigate('/profile');
       },
       onError: (error) => {
@@ -55,6 +50,7 @@ export default function Login() {
         <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
           <form onSubmit={handleSubmit}>
             <Stack spacing={4}>
+              {/* <CustomInput label="Email address" name="email" type="email" /> */}
               <FormControl id="email">
                 <FormLabel>Email address</FormLabel>
                 <Input type="email" name="email" onChange={(event) => setEmail(event.target.value)} />
@@ -64,10 +60,7 @@ export default function Login() {
                 <Input type="password" name="password" onChange={(event) => setPassword(event.target.value)} />
               </FormControl>
               <Stack spacing={10}>
-                <Stack
-                  direction={{ base: 'column', sm: 'row' }}
-                  align={'start'}
-                  justify={'space-between'}>
+                <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
                   <Checkbox>Remember me</Checkbox>
                   <Link color={'blue.400'}>Forgot password?</Link>
                 </Stack>
