@@ -68,21 +68,26 @@ function App() {
   const authContext = useContext(AuthContext);
   const { isAuthenticated } = useSnapshot(store.auth);
   const token = localStorage.getItem('token');
+  console.log('token: ', token);
+  console.log("isAuthenticated: ", isAuthenticated);
 
   useEffect(() => {
     if (token) {
       store.auth.isAuthenticated = true;
+      store.auth.token = token;
     } {
       store.auth.isAuthenticated = false;
     }
-  }, [])
+  }, [token]);
 
   return (
     <QueryClientProvider client={queryClient} >
       <Header />
       <Box pt='50px'>
         {
-          authContext.isAuthenticated ? (
+          // authContext.isAuthenticated ? 
+          isAuthenticated ? 
+          (
             <RouterProvider router={privateRouter} />
           ) : (
             <RouterProvider router={router} />

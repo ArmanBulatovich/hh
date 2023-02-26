@@ -7,11 +7,11 @@ import { AuthProvider } from './context/AuthContextProvider'
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <AuthProvider>
+  // <AuthProvider>
     <React.StrictMode>
       <ChakraProvider>
         <App />
       </ChakraProvider>
     </React.StrictMode>
-  </AuthProvider>,
+  // </AuthProvider>,
 )
