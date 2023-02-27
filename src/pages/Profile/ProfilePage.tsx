@@ -1,25 +1,9 @@
-import React, { useState } from 'react';
-import {
-  Progress,
-  Box,
-  ButtonGroup,
-  Button,
-  Heading,
-  Flex,
-  FormControl,
-  GridItem,
-  FormLabel,
-  Input,
-  Select,
-  SimpleGrid,
-  InputLeftAddon,
-  InputGroup,
-  Textarea,
-  FormHelperText,
-  InputRightElement,
-} from '@chakra-ui/react';
-
+import React, { useState, useEffect } from 'react';
+import { Progress, Box, ButtonGroup, Button, Heading, Flex, FormControl, GridItem, FormLabel, Input, Select, SimpleGrid, InputLeftAddon, InputGroup, Textarea, FormHelperText, InputRightElement, } from '@chakra-ui/react';
 import { useToast } from '@chakra-ui/react';
+import { useSnapshot } from 'valtio';
+import { store } from '../../store/store';
+
 
 const Form1 = () => {
   const [show, setShow] = React.useState(false);
@@ -277,6 +261,8 @@ export default function ProfilePage() {
   const toast = useToast();
   const [step, setStep] = useState(1);
   const [progress, setProgress] = useState(33.33);
+  const { isAuthenticated, token } = useSnapshot(store.auth);
+  console.log({ isAuthenticated, token });
   return (
     <>
       <Box

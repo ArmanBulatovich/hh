@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react"
-import { Route, Navigate, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
+import { Route, Navigate, RouterProvider, createBrowserRouter, createRoutesFromElements, Routes } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { useSnapshot } from 'valtio'
 import { Box } from '@chakra-ui/react'
@@ -12,7 +12,6 @@ import ErrorPage from './pages/ErrorPage/ErrorPage'
 import HomePage from "./pages/HomePage/HomePage"
 import ProfilePage from "./pages/Profile/ProfilePage"
 import { store } from './store/store'
-import { AuthContext } from "./context/AuthContextProvider"
 
 
 const router = createBrowserRouter([
@@ -65,35 +64,27 @@ const privateRouter = createBrowserRouter([
 
 function App() {
   const queryClient = new QueryClient();
-  const authContext = useContext(AuthContext);
-  const { isAuthenticated } = useSnapshot(store.auth);
-  const token = localStorage.getItem('token');
-  console.log('token: ', token);
-  console.log("isAuthenticated: ", isAuthenticated);
+  const { isAuthenticated, token } = useSnapshot(store.auth);
 
-  useEffect(() => {
-    if (token) {
-      store.auth.isAuthenticated = true;
-      store.auth.token = token;
-    } {
-      store.auth.isAuthenticated = false;
-    }
-  }, [token]);
+
+  console.log({ isAuthenticated, token })
 
   return (
     <QueryClientProvider client={queryClient} >
       <Header />
+      {/* <Routes> */}
       <Box pt='50px'>
         {
-          // authContext.isAuthenticated ? 
-          isAuthenticated ? 
-          (
-            <RouterProvider router={privateRouter} />
-          ) : (
-            <RouterProvider router={router} />
-          )
+          token ?
+            (
+              <RouterProvider router={privateRouter} />
+            ) : (
+              <RouterProvider router={router} />
+              // <RouterProvider router={privateRouter} />
+            )
         }
       </Box>
+      {/* </Routes> */}
       <Box bottom={0} position="fixed" width='100%'><Footer /></Box>
     </QueryClientProvider>
   )

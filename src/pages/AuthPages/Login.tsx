@@ -4,6 +4,9 @@ import { useMutation } from 'react-query';
 import { expressService } from '../../axiosConfig';
 import { useNavigate } from 'react-router-dom';
 
+import { store } from '../../store/store';
+import { useSnapshot } from 'valtio';
+
 type LoginFormValues = {
   [x: string]: any;
   email: string;
@@ -12,6 +15,7 @@ type LoginFormValues = {
 };
 
 export default function Login() {
+  const { isAuthenticated, token } = useSnapshot(store.auth);
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,8 +25,13 @@ export default function Login() {
     ({ email, password }) => expressService.post('auth/login', { email, password }).then((response) => response.data),
     {
       onSuccess: (data) => {
-        localStorage.setItem('token', JSON.stringify(data.data.accessToken));
-        navigate('/profile');
+        store.auth.token = data.data.accessToken;
+        store.auth.isAuthenticated = true;
+        // console.log(data.data.accessToken)
+        // if (data.data.accessToken) {
+        //   console.log("isAuthenticated", isAuthenticated)
+        //   return navigate('/profile');
+        // }
       },
       onError: (error) => {
         setError(error.message);
@@ -30,10 +39,21 @@ export default function Login() {
     }
   );
 
+  useEffect(() => {
+    if (token) {
+      navigate('/profile')
+    } else {
+      navigate('/login')
+    }
+
+  }, [token])
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     loginMutation.mutate({ email, password });
   };
+
+  console.log({ isAuthenticated, token });
 
   return (
     <Flex minH={'90vh'} align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>

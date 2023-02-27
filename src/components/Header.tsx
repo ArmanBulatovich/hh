@@ -1,40 +1,18 @@
 import React, { useContext } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import {
-  Box,
-  Flex,
-  Text,
-  IconButton,
-  Button,
-  Stack,
-  Collapse,
-  Icon,
-  Link,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  useColorModeValue,
-  useBreakpointValue,
-  useDisclosure,
-} from '@chakra-ui/react';
-import {
-  HamburgerIcon,
-  CloseIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-} from '@chakra-ui/icons';
-import { AuthContext } from '../context/AuthContextProvider';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Box, Flex, Text, IconButton, Button, Stack, Collapse, Icon, Link, Popover, PopoverTrigger, PopoverContent, useColorModeValue, useBreakpointValue, useDisclosure, } from '@chakra-ui/react';
+import { HamburgerIcon, CloseIcon, ChevronDownIcon, ChevronRightIcon, } from '@chakra-ui/icons';
+import { useSnapshot } from 'valtio'
+
+import { store } from '../store/store';
 
 export default function Header() {
-  const authContext = useContext(AuthContext);
+  const { isAuthenticated } = useSnapshot(store.auth);
   const { isOpen, onToggle } = useDisclosure();
+  // const navigate = useNavigate();
 
   return (
-    <Box
-      position={'fixed'}
-      top={0}
-      width={'100%'}
-    >
+    <Box position={'fixed'} top={0} width={'100%'}>
       <Flex
         bg={useColorModeValue('white', 'gray.800')}
         color={useColorModeValue('gray.600', 'white')}
@@ -60,9 +38,12 @@ export default function Header() {
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           <Text
+            as={'a'}
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
             fontFamily={'heading'}
-            color={useColorModeValue('gray.800', 'white')}>
+            color={useColorModeValue('gray.800', 'white')}
+            href={'/'}
+          >
             Logo
           </Text>
 
@@ -71,44 +52,52 @@ export default function Header() {
           </Flex>
         </Flex>
         {
-          authContext.isAuthenticated ? (
-            <Button
-              as={'a'}
-              fontSize={'sm'}
-              fontWeight={400}
-              variant={'link'}
-              href={'/profile'}>
-              Profile
-            </Button>
-          ) : (
-            <Stack
-              flex={{ base: 1, md: 0 }}
-              justify={'flex-end'}
-              direction={'row'}
-              spacing={6}>
+          isAuthenticated
+            ? (
               <Button
-                as={'a'}
+                // as={'a'}
                 fontSize={'sm'}
                 fontWeight={400}
                 variant={'link'}
-                href={'/login'}>
-                Sign In
+                // href={'/profile'}
+                onClick={() => { store.auth.isAuthenticated = false; store.auth.token = null; }}
+              >
+                Logout
               </Button>
-              <Button
-                as={'a'}
-                display={{ base: 'none', md: 'inline-flex' }}
-                fontSize={'sm'}
-                fontWeight={600}
-                color={'white'}
-                bg={'pink.400'}
-                href={'/register'}
-                _hover={{
-                  bg: 'pink.300',
-                }}>
-                Sign Up
-              </Button>
-            </Stack>
-          )
+            ) : (
+              <Stack
+                flex={{ base: 1, md: 0 }}
+                justify={'flex-end'}
+                direction={'row'}
+                spacing={6}>
+                <Button
+                  as={'a'}
+                  fontSize={'sm'}
+                  fontWeight={400}
+                  variant={'link'}
+                  // onClick={() => navigate("/login")}
+                  _hover={{
+                    textDecoration: 'none',
+                  }}
+                // textDecoration={'none'}
+                >
+                  Sign In
+                </Button>
+                <Button
+                  as={'a'}
+                  display={{ base: 'none', md: 'inline-flex' }}
+                  fontSize={'sm'}
+                  fontWeight={600}
+                  color={'white'}
+                  bg={'pink.400'}
+                  href={'/register'}
+                  _hover={{
+                    bg: 'pink.300',
+                  }}>
+                  Sign Up
+                </Button>
+              </Stack>
+            )
         }
 
       </Flex>
