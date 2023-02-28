@@ -3,6 +3,8 @@ import { Flex, Box, FormControl, FormLabel, Input, Checkbox, Stack, Link, Button
 import { useMutation } from 'react-query';
 import { expressService } from '../../axiosConfig';
 import { useNavigate } from 'react-router-dom';
+import { useSnapshot } from 'valtio';
+import { store } from '../../store/store';
 
 type LoginFormValues = {
   [x: string]: any;
@@ -16,13 +18,15 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const token = localStorage.getItem('token');
+  const {isAuthenticated} = useSnapshot(store.auth);
 
   const loginMutation = useMutation<LoginFormValues, Error, { email: string, password: string }>(
     ({ email, password }) => expressService.post('auth/login', { email, password }).then((response) => response.data),
     {
       onSuccess: (data) => {
-        localStorage.setItem('token', JSON.stringify(data.data.accessToken));
-        navigate('/profile');
+        localStorage.setItem('token', data.data.accessToken);
+        store.auth.isAuthenticated = true;
       },
       onError: (error) => {
         setError(error.message);
@@ -34,6 +38,14 @@ export default function Login() {
     event.preventDefault();
     loginMutation.mutate({ email, password });
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/profile')
+    } else {
+      navigate('/login')
+    }
+  }, [token])
 
   return (
     <Flex minH={'90vh'} align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>

@@ -1,25 +1,7 @@
-import React, { useState } from 'react';
-import {
-  Progress,
-  Box,
-  ButtonGroup,
-  Button,
-  Heading,
-  Flex,
-  FormControl,
-  GridItem,
-  FormLabel,
-  Input,
-  Select,
-  SimpleGrid,
-  InputLeftAddon,
-  InputGroup,
-  Textarea,
-  FormHelperText,
-  InputRightElement,
-} from '@chakra-ui/react';
-
+import React, { useState, useEffect } from 'react';
+import { Progress, Box, ButtonGroup, Button, Heading, Flex, FormControl, GridItem, FormLabel, Input, Select, SimpleGrid, InputLeftAddon, InputGroup, Textarea, FormHelperText, InputRightElement, } from '@chakra-ui/react';
 import { useToast } from '@chakra-ui/react';
+
 
 const Form1 = () => {
   const [show, setShow] = React.useState(false);

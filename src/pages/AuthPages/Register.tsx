@@ -6,6 +6,7 @@ import { useQuery } from 'react-query';
 import { Select } from '@chakra-ui/react';
 
 import { expressService } from '../../axiosConfig';
+import { store } from '../../store/store';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -33,8 +34,9 @@ export default function Register() {
     expressService.post('auth/register',
       { email, password, phoneNumber, role }).then((res) => {
         if (res.status === 201) {
-          console.log(res.data.data.accessToken);
-          localStorage.setItem('token', JSON.stringify(res.data.data.accessToken));
+          store.auth.token = data.data.accessToken;
+          store.auth.isAuthenticated = true;
+          navigate('/profile');
           navigate('/profile');
         }
       });
