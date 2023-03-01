@@ -50,7 +50,7 @@ function App() {
           </Route>
         </Routes>
       </Box>
-      <Box bottom={0} position="fixed" width="100%">
+      <Box bottom={0} position="relative" width="100%">
         <Footer />
       </Box>
     </QueryClientProvider>
