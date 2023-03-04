@@ -1,15 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Box, Button, Stack } from "@chakra-ui/react";
+import { Box, Button, Input, Select, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 
 import { expressService } from "../../axiosConfig";
 import CustomInput from "../../ui/Input";
 
 export const Profile = () => {
-  const [initialState, setInitialState] = useState<any>(undefined);
+  const [initialState, setInitialState] = useState<any>();
+  const [educationalInstitutionCategories, setEducationalInstitutionCategories] = useState<any>([]);
+  const [educationDegrees, setEducationDegrees] = useState<any>([]);
+  const [country, setCountry] = useState<any>([]);
+  console.log(initialState && initialState)
   const tokenFromLocalStorage = localStorage.getItem("token");
-  const { handleSubmit, control } = useForm({ defaultValues: initialState });
+  const { handleSubmit, control, register } = useForm(
+    //   {
+    //   defaultValues: {
+    //     name: initialState && initialState.account.name,
+    //     lastName: initialState && initialState.account.lastName,
+    //     middleName: initialState && initialState.account.middleName,
+    //     phoneNumber: initialState && initialState.phoneNumber,
+    //     email: initialState && initialState.email,
+    //     birthdayDate: initialState && initialState.account.birthdayDate,
+    //     wantedPosition: initialState && initialState.account.wantedPosition,
+    //     aboutYourself: initialState && initialState.account.aboutYourself,
+    //     experience: initialState && initialState.account.experience,
+    //     education: initialState && initialState.account.education,
+    //     educationalInstitutionCategory: initialState && initialState.account.educationalInstitutionCategory,
+    //     educationDegree: initialState && initialState.account.educationDegree,
+    //     country: initialState && initialState.account.country,
+    //     city: initialState && initialState.account.city,
+    //     subjects: initialState && initialState.account.subjects,
+    //   }
+    // }
+  );
 
   const { isLoading, error, data } = useQuery(
     "users/account",
@@ -28,134 +52,174 @@ export const Profile = () => {
     }
   );
 
+  // const { isLoading, error, data } = useQuery(
+  //   "users/account",
+  //   () =>
+  //     expressService
+  //       .get("users/account", {
+  //         headers: {
+  //           Authorization: `Bearer ${tokenFromLocalStorage}`,
+  //         },
+  //       })
+  //       .then((res) => res.data),
+  //   {
+  //     onSuccess: (data) => {
+  //       setInitialState(data.data);
+  //     },
+  //   }
+  // );
+
+  useEffect(() => {
+    expressService.get("references/educational-institution-categories", {
+      headers: {
+        Authorization: `Bearer ${tokenFromLocalStorage}`,
+      },
+    }).then((res) => setEducationalInstitutionCategories(res.data.data));
+
+    expressService.get("references/education-degrees", {
+      headers: {
+        Authorization: `Bearer ${tokenFromLocalStorage}`,
+      },
+    }).then((res) => setEducationDegrees(res.data.data));
+
+    expressService.get("references/countries", {
+      headers: {
+        Authorization: `Bearer ${tokenFromLocalStorage}`,
+      },
+    }).then((res) => setCountry(res.data.data));
+
+  }, []);
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>An error occurred: {data.error.message}</div>;
 
   const onSubmit = (data: any) => {
     console.log(data);
-  };
-  
-  return (
-    <Box mt="30px" mb="80px" mx={200}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Stack spacing={4}>
-          {/* <CustomInput
-            control={control}
-            name={profile.name}
-            label="First Name"
-            rules={{ required: "First Name is required" }}
-            placeholder="Enter your first name"
-          /> */}
-          <CustomInput
-            control={control}
-            name='lastName'
-            label="Last Name"
-            rules={{ required: "Last Name is required" }}
-            placeholder="Enter your last name"
-          />
-          {/* <input {...register(`${initialState.account.lastName}`)} /> */}
-          {/*
-          <CustomInput
-            control={control}
-            name="middleName"
-            label="Middle Name"
-            rules={{ required: "Last Name is required" }}
-            placeholder="Enter your middle name"
-          />
-          <CustomInput
-            control={control}
-            name="phoneNumber"
-            label="Telephone Number"
-            rules={{ required: "Phone number is required" }}
-            placeholder="Telephone Number"
-          />
-          <CustomInput
-            control={control}
-            name="email"
-            label="Email"
-            rules={{ required: "Email is required" }}
-            placeholder="Email"
-          />
-          <CustomInput
-            control={control}
-            name="location"
-            label="City of residence"
-            rules={{ required: "Last Name is required" }}
-            placeholder="Location"
-          />
-          <CustomInput
-            control={control}
-            name="birthDate"
-            label="Birth Date"
-            rules={{ required: "Last Name is required" }}
-            placeholder="Birth Date"
-          />
-          <CustomInput
-            control={control}
-            name="gender"
-            label="Gender"
-            rules={{ required: "Last Name is required" }}
-            placeholder="Gender"
-          />
-          <CustomInput
-            control={control}
-            name="citizenship"
-            label="Citizenship"
-            rules={{ required: "Last Name is required" }}
-            placeholder="Citizenship"
-          />
-          <CustomInput
-            control={control}
-            name="desiredPosition"
-            label="Desired position"
-            rules={{ required: "Last Name is required" }}
-            placeholder="Desired position"
-          />
-          <CustomInput
-            control={control}
-            name="salary"
-            label="Salary"
-            rules={{ required: "Last Name is required" }}
-            placeholder="Salary"
-          />
-          
-          <CustomInput
-            control={control}
-            name="education"
-            label="Education"
-            rules={{ required: "Last Name is required" }}
-            placeholder="Education"
-          />
-          
-          <CustomInput
-            control={control}
-            name="languageProficiency"
-            label="Language proficiency"
-            rules={{ required: "Last Name is required" }}
-            placeholder="Language proficiency"
-          />
-         
-          <CustomInput
-            control={control}
-            name="additionalInformation"
-            label="Additional information"
-            rules={{ required: "Last Name is required" }}
-            placeholder="Additional information"
-          />
-          
-          <CustomInput
-            control={control}
-            name="wantToWorkAt"
-            label="Which University would you like to work at"
-            rules={{ required: "Last Name is required" }}
-            placeholder="Which University would you like to work at"
-          /> */}
+    expressService.patch("teacher", data, {
+      headers: {
+        Authorization: `Bearer ${tokenFromLocalStorage}`,
+      },
+    })
+  }
 
-          <Button type="submit" colorScheme="blue">
-            Submit
-          </Button>
-        </Stack>
-      </form>
-    </Box>
+  return (
+    <Box mt="30px" mb="80px">
+      <Box display="flex" justifyContent="center">
+        <Box width="80%">
+          <Text fontSize="3xl" display="flex" justifyContent="center" color="blue" paddingBottom="36px" >Profile page</Text>
+          <Tabs isFitted variant='enclosed'>
+            <TabList mb='1em'>
+              <Tab fontSize="xl">User data</Tab>
+              <Tab fontSize="xl">Account data</Tab>
+              <Tab fontSize="xl">Experiences</Tab>
+              <Tab fontSize="xl">Subjects</Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <Box display='flex' justifyContent='space-between'>
+                  <Box display='block' width='45%' paddingTop="16px">
+                    <Text fontSize='lg'>Phone Number: </Text>
+                    <Input defaultValue={initialState.phoneNumber} {...register("phoneNumber")} disabled />
+                  </Box>
+                  <Box display='block' width='45%' paddingTop="16px">
+                    <Text fontSize='lg'>Email: </Text>
+                    <Input defaultValue={initialState.email} {...register("email")} disabled />
+                  </Box>
+                </Box>
+              </TabPanel>
+
+              <TabPanel>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <Box display="flex" justifyContent="space-between">
+                    <Box display='block' width='45%' paddingTop="16px">
+                      <Text fontSize='lg'>First name: </Text>
+                      <Input defaultValue={initialState.account.name} {...register("name")} />
+                    </Box>
+                    <Box display='block' width='45%' paddingTop="16px">
+                      <Text fontSize='lg'>Last name: </Text>
+                      <Input defaultValue={initialState.account.lastName} {...register("lastName")} />
+                    </Box>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <Box display='block' width='45%' paddingTop="16px">
+                      <Text fontSize='lg'>Middle name: </Text>
+                      <Input defaultValue={initialState.account.middleName} {...register("middleName")} />
+                    </Box>
+                    <Box display='block' width='45%' paddingTop="16px">
+                      <Text fontSize='lg'>Birth date: </Text>
+                      <Input defaultValue={initialState.account.birthdayDate.substring(0, 10)} {...register("birthdayDate")} />
+                    </Box>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <Box display='block' width='45%' paddingTop="16px">
+                      <Text fontSize='lg'>Wanted position: </Text>
+                      <Input defaultValue={initialState.account.wantedPosition} {...register("wantedPosition")} />
+                    </Box>
+                    <Box display='block' width='45%' paddingTop="16px">
+                      <Text fontSize='lg'>About yourself: </Text>
+                      <Input defaultValue={initialState.account.aboutYourself} {...register("aboutYourself")} />
+                    </Box>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <Box display='block' width='45%' paddingTop="16px">
+                      <Text fontSize='lg'>Educational institution of category: </Text>
+                      <Select defaultValue={initialState.account.educationalInstitutionCategory} {...register("educationalInstitutionCategory")}
+                        onChange={(e) => { e.target.value; console.log("e.target.value: ", e.target.value) }}
+                      >
+                        {educationalInstitutionCategories.map((item: any) => {
+                          return (
+                            <option key={item.id} value={item.code}>{item.name}</option>
+                          )
+                        })}
+                      </Select>
+                    </Box>
+                    <Box display='block' width='45%' paddingTop="16px">
+                      <Text fontSize='lg'>Educational institution of category: </Text>
+                      <Select defaultValue={initialState.account.educationDegrees} {...register("educationDegrees")}>
+                        {educationDegrees.map((item: any) => {
+                          return (
+                            <option key={item.id}
+                              value={item.code}
+                            >{item.name}</option>
+                          )
+                        })}
+                      </Select>
+                    </Box>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <Box display='block' width='45%' paddingTop="16px">
+                      <Text fontSize='lg'>Educational institution of category: </Text>
+                      <Select defaultValue={initialState.account.country} {...register("country")}>
+                        {country.map((item: any) => {
+                          return (
+                            <option key={item.id} value={item}>{item.name}</option>
+                          )
+                        })}
+                      </Select>
+                    </Box>
+                    <Box display='block' width='45%' paddingTop="16px"></Box>
+                  </Box>
+
+                  <Box display="flex" justifyContent="center" paddingTop="36px" >
+                    <Button type="submit" colorScheme="blue" width="250px">
+                      Submit
+                    </Button>
+                  </Box>
+                </form>
+              </TabPanel>
+              <TabPanel>
+                Three
+              </TabPanel>
+              <TabPanel>
+                Four
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+
+
+        </Box>
+      </Box>
+
+    </Box >
   );
 };

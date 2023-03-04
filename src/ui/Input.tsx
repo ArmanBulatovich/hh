@@ -6,7 +6,7 @@ const CustomInput = ({ control, name, label, rules, ...rest }: any) => {
     name,
     control,
     rules,
-    defaultValue: '',
+    // defaultValue: '',
   });
 
   const { invalid, error } = fieldState;

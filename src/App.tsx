@@ -16,7 +16,6 @@ import Login from "./pages/AuthPages/Login";
 import Register from "./pages/AuthPages/Register";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import HomePage from "./pages/HomePage/HomePage";
-import ProfilePage from "./pages/Profile/ProfilePage";
 import { useSnapshot } from "valtio";
 
 import { store } from "./store/store";
@@ -50,7 +49,7 @@ function App() {
           </Route>
         </Routes>
       </Box>
-      <Box bottom={0} position="relative" width="100%">
+      <Box bottom={0} position="fixed" width="100%">
         <Footer />
       </Box>
     </QueryClientProvider>
