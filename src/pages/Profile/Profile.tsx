@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useController, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Box, Button, Stack } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 
@@ -7,9 +7,9 @@ import { expressService } from "../../axiosConfig";
 import CustomInput from "../../ui/Input";
 
 export const Profile = () => {
-  const [profile, setProfile] = useState<any>(undefined);
+  const [initialState, setInitialState] = useState<any>(undefined);
   const tokenFromLocalStorage = localStorage.getItem("token");
-  const { handleSubmit, control } = useForm();
+  const { handleSubmit, control } = useForm({ defaultValues: initialState });
 
   const { isLoading, error, data } = useQuery(
     "users/account",
@@ -23,12 +23,10 @@ export const Profile = () => {
         .then((res) => res.data),
     {
       onSuccess: (data) => {
-        setProfile(data.data);
-        return profile;
+        setInitialState(data.data);
       },
     }
   );
-  console.log("profile: ", profile.account.lastName);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>An error occurred: {data.error.message}</div>;
@@ -50,13 +48,12 @@ export const Profile = () => {
           /> */}
           <CustomInput
             control={control}
-            name="lastName"
+            name='lastName'
             label="Last Name"
             rules={{ required: "Last Name is required" }}
             placeholder="Enter your last name"
-            // value={profile.account.lastName}
-            // defaultValue={profile.account.lastName}
           />
+          {/* <input {...register(`${initialState.account.lastName}`)} /> */}
           {/*
           <CustomInput
             control={control}
