@@ -52,23 +52,6 @@ export const Profile = () => {
     }
   );
 
-  // const { isLoading, error, data } = useQuery(
-  //   "users/account",
-  //   () =>
-  //     expressService
-  //       .get("users/account", {
-  //         headers: {
-  //           Authorization: `Bearer ${tokenFromLocalStorage}`,
-  //         },
-  //       })
-  //       .then((res) => res.data),
-  //   {
-  //     onSuccess: (data) => {
-  //       setInitialState(data.data);
-  //     },
-  //   }
-  // );
-
   useEffect(() => {
     expressService.get("references/educational-institution-categories", {
       headers: {
@@ -94,7 +77,10 @@ export const Profile = () => {
   if (error) return <div>An error occurred: {data.error.message}</div>;
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    console.log(data.educationDegrees);
+
+    const test = educationDegrees.find((item: any) => item.code === data.educationDegrees);
+    console.log({ test, educationDegrees });
     expressService.patch("teacher", data, {
       headers: {
         Authorization: `Bearer ${tokenFromLocalStorage}`,
@@ -200,6 +186,7 @@ export const Profile = () => {
                     <Box display='block' width='45%' paddingTop="16px"></Box>
                   </Box>
 
+
                   <Box display="flex" justifyContent="center" paddingTop="36px" >
                     <Button type="submit" colorScheme="blue" width="250px">
                       Submit
@@ -208,14 +195,46 @@ export const Profile = () => {
                 </form>
               </TabPanel>
               <TabPanel>
-                Three
+                {initialState.account.experiences.map((item: any, index: any) => {
+                  return (
+                    <Box borderBottom="1px solid grey" paddingBottom="24px" key={index}>
+                      <Box display="flex" justifyContent="space-between">
+                        <Box display='block' width='45%' paddingTop="16px">
+                          <Text fontSize='lg'>Work place name: </Text>
+                          <Input defaultValue={item.workPlaceName} {...register("workPlaceName")} />
+                        </Box>
+                        <Box display='block' width='45%' paddingTop="16px">
+                          <Text fontSize='lg'>Position: </Text>
+                          <Input defaultValue={item.position} {...register("position")} />
+                        </Box>
+                      </Box>
+                      <Box display="flex" justifyContent="space-between">
+                        <Box display='block' width='45%' paddingTop="16px">
+                          <Text fontSize='lg'>Time begin: </Text>
+                          <Input defaultValue={item.timeBegin} {...register("timeBegin")} />
+                        </Box>
+                        <Box display='block' width='45%' paddingTop="16px">
+                          <Text fontSize='lg'>Time end: </Text>
+                          <Input defaultValue={item.timeEnd} {...register("timeEnd")} />
+                        </Box>
+                      </Box>
+                      <Box display="flex" justifyContent="space-between">
+                        <Box display='block' width='100%' paddingTop="16px">
+                          <Text fontSize='lg'>Accomplishments: </Text>
+                          <Input defaultValue={item.accomplishments} {...register("accomplishments")} />
+                        </Box>
+                      </Box>
+                    </Box>
+                  )
+                })}
+
+                <Button marginTop="24px">+</Button>
               </TabPanel>
               <TabPanel>
                 Four
               </TabPanel>
             </TabPanels>
           </Tabs>
-
 
         </Box>
       </Box>
