@@ -10,30 +10,9 @@ export const Profile = () => {
   const [initialState, setInitialState] = useState<any>();
   const [educationalInstitutionCategories, setEducationalInstitutionCategories] = useState<any>([]);
   const [educationDegrees, setEducationDegrees] = useState<any>([]);
-  const [country, setCountry] = useState<any>([]);
-  console.log(initialState && initialState)
+  const [countries, setCountries] = useState<any>([]);
   const tokenFromLocalStorage = localStorage.getItem("token");
-  const { handleSubmit, control, register } = useForm(
-    //   {
-    //   defaultValues: {
-    //     name: initialState && initialState.account.name,
-    //     lastName: initialState && initialState.account.lastName,
-    //     middleName: initialState && initialState.account.middleName,
-    //     phoneNumber: initialState && initialState.phoneNumber,
-    //     email: initialState && initialState.email,
-    //     birthdayDate: initialState && initialState.account.birthdayDate,
-    //     wantedPosition: initialState && initialState.account.wantedPosition,
-    //     aboutYourself: initialState && initialState.account.aboutYourself,
-    //     experience: initialState && initialState.account.experience,
-    //     education: initialState && initialState.account.education,
-    //     educationalInstitutionCategory: initialState && initialState.account.educationalInstitutionCategory,
-    //     educationDegree: initialState && initialState.account.educationDegree,
-    //     country: initialState && initialState.account.country,
-    //     city: initialState && initialState.account.city,
-    //     subjects: initialState && initialState.account.subjects,
-    //   }
-    // }
-  );
+  const { handleSubmit, control, register } = useForm();
 
   const { isLoading, error, data } = useQuery(
     "users/account",
@@ -69,7 +48,7 @@ export const Profile = () => {
       headers: {
         Authorization: `Bearer ${tokenFromLocalStorage}`,
       },
-    }).then((res) => setCountry(res.data.data));
+    }).then((res) => setCountries(res.data.data));
 
   }, []);
 
@@ -77,11 +56,9 @@ export const Profile = () => {
   if (error) return <div>An error occurred: {data.error.message}</div>;
 
   const onSubmit = (data: any) => {
-    console.log(data.educationDegrees);
-
-    const test = educationDegrees.find((item: any) => item.code === data.educationDegrees);
-    console.log({ test, educationDegrees });
-    expressService.patch("teacher", data, {
+    const educationalInstitutionCategory = educationalInstitutionCategories.find((item: any) => item.code === data.educationalInstitutionCategory);
+    const country = countries.find((item: any) => item.id === data.country);
+    expressService.patch("teacher", { ...data, educationalInstitutionCategory, country }, {
       headers: {
         Authorization: `Bearer ${tokenFromLocalStorage}`,
       },
@@ -148,9 +125,9 @@ export const Profile = () => {
                   </Box>
                   <Box display="flex" justifyContent="space-between">
                     <Box display='block' width='45%' paddingTop="16px">
-                      <Text fontSize='lg'>Educational institution of category: </Text>
-                      <Select defaultValue={initialState.account.educationalInstitutionCategory} {...register("educationalInstitutionCategory")}
-                        onChange={(e) => { e.target.value; console.log("e.target.value: ", e.target.value) }}
+                      <Text fontSize='lg'>Educational institution of category:</Text>
+                      <Select defaultValue={initialState.account.educationalInstitutionCategory.code}
+                        {...register("educationalInstitutionCategory")}
                       >
                         {educationalInstitutionCategories.map((item: any) => {
                           return (
@@ -160,13 +137,11 @@ export const Profile = () => {
                       </Select>
                     </Box>
                     <Box display='block' width='45%' paddingTop="16px">
-                      <Text fontSize='lg'>Educational institution of category: </Text>
+                      <Text fontSize='lg'>Educational degrees:</Text>
                       <Select defaultValue={initialState.account.educationDegrees} {...register("educationDegrees")}>
                         {educationDegrees.map((item: any) => {
                           return (
-                            <option key={item.id}
-                              value={item.code}
-                            >{item.name}</option>
+                            <option key={item.id} value={item.code}>{item.name}</option>
                           )
                         })}
                       </Select>
@@ -174,11 +149,11 @@ export const Profile = () => {
                   </Box>
                   <Box display="flex" justifyContent="space-between">
                     <Box display='block' width='45%' paddingTop="16px">
-                      <Text fontSize='lg'>Educational institution of category: </Text>
+                      <Text fontSize='lg'>Countries:</Text>
                       <Select defaultValue={initialState.account.country} {...register("country")}>
-                        {country.map((item: any) => {
+                        {countries.map((item: any) => {
                           return (
-                            <option key={item.id} value={item}>{item.name}</option>
+                            <option key={item.id} value={item.id}>{item.name}</option>
                           )
                         })}
                       </Select>
