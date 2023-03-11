@@ -16,10 +16,10 @@ import Login from "./pages/AuthPages/Login";
 import Register from "./pages/AuthPages/Register";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import HomePage from "./pages/HomePage/HomePage";
-import ProfilePage from "./pages/Profile/ProfilePage";
 import { useSnapshot } from "valtio";
 
 import { store } from "./store/store";
+import { Profile } from "./pages/Profile/Profile";
 
 function App() {
   const queryClient = new QueryClient();
@@ -44,7 +44,7 @@ function App() {
             <Route path="/login" element={<Login />} />,
             <Route path="/register" element={<Register />} />,
             {isAuthenticated && (
-              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/profile" element={<Profile />} />
             )}
           </Route>
         </Routes>
