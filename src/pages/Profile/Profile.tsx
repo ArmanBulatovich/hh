@@ -7,12 +7,13 @@ import { expressService } from "../../axiosConfig";
 import CustomInput from "../../ui/Input";
 
 export const Profile = () => {
+  const { handleSubmit, control, register } = useForm();
   const [initialState, setInitialState] = useState<any>();
   const [educationalInstitutionCategories, setEducationalInstitutionCategories] = useState<any>([]);
   const [educationDegrees, setEducationDegrees] = useState<any>([]);
   const [countries, setCountries] = useState<any>([]);
+  const [add, setAdd] = useState(false);
   const tokenFromLocalStorage = localStorage.getItem("token");
-  const { handleSubmit, control, register } = useForm();
 
   const { isLoading, error, data } = useQuery(
     "users/account",
@@ -49,7 +50,6 @@ export const Profile = () => {
         Authorization: `Bearer ${tokenFromLocalStorage}`,
       },
     }).then((res) => setCountries(res.data.data));
-
   }, []);
 
   if (isLoading) return <div>Loading...</div>;
@@ -58,11 +58,25 @@ export const Profile = () => {
   const onSubmit = (data: any) => {
     const educationalInstitutionCategory = educationalInstitutionCategories.find((item: any) => item.code === data.educationalInstitutionCategory);
     const country = countries.find((item: any) => item.id === data.country);
-    expressService.patch("teacher", { ...data, educationalInstitutionCategory, country }, {
-      headers: {
-        Authorization: `Bearer ${tokenFromLocalStorage}`,
-      },
-    })
+    const newExperience = {
+      workPlaceName: data.newWorkPlaceName,
+      position: data.newPosition,
+      startDate: data.newStartDate,
+      endDate: data.newEndDate,
+      accomplishments: data.newAccomplishments,
+    }
+    console.log('newExperience: ', newExperience);
+    const experiences = [...initialState.account.experiences, newExperience];
+    // console.log('experiences: ', experiences);
+
+    // expressService.patch("teacher", {
+    //   ...data, educationalInstitutionCategory, country,
+    //   experiences
+    // }, {
+    //   headers: {
+    //     Authorization: `Bearer ${tokenFromLocalStorage}`,
+    //   },
+    // })
   }
 
   return (
@@ -161,6 +175,82 @@ export const Profile = () => {
                     <Box display='block' width='45%' paddingTop="16px"></Box>
                   </Box>
 
+                  {initialState.account.experiences.map((item: any, index: any) => {
+                    return (
+                      <Box borderBottom="1px solid grey" paddingBottom="24px" key={index}>
+                        <Box display="flex" justifyContent="space-between">
+                          <Box display='block' width='45%' paddingTop="16px">
+                            <Text fontSize='lg'>Work place name: </Text>
+                            <Input defaultValue={item.workPlaceName}
+                            // {...register("workPlaceName")}
+                            />
+                          </Box>
+                          <Box display='block' width='45%' paddingTop="16px">
+                            <Text fontSize='lg'>Position: </Text>
+                            <Input defaultValue={item.position}
+                            // {...register("position")} 
+                            />
+                          </Box>
+                        </Box>
+                        <Box display="flex" justifyContent="space-between">
+                          <Box display='block' width='45%' paddingTop="16px">
+                            <Text fontSize='lg'>Time begin: </Text>
+                            <Input defaultValue={item.timeBegin}
+                            // {...register("timeBegin")} 
+                            />
+                          </Box>
+                          <Box display='block' width='45%' paddingTop="16px">
+                            <Text fontSize='lg'>Time end: </Text>
+                            <Input defaultValue={item.timeEnd}
+                            // {...register("timeEnd")} 
+                            />
+                          </Box>
+                        </Box>
+                        <Box display="flex" justifyContent="space-between">
+                          <Box display='block' width='100%' paddingTop="16px">
+                            <Text fontSize='lg'>Accomplishments: </Text>
+                            <Input defaultValue={item.accomplishments}
+                            // {...register("accomplishments")} 
+                            />
+                          </Box>
+                        </Box>
+                      </Box>
+                    )
+                  })}
+                  {
+                    add &&
+                    <Box borderBottom="1px solid grey" paddingBottom="24px">
+                      <Box display="flex" justifyContent="space-between">
+                        <Box display='block' width='45%' paddingTop="16px">
+                          <Text fontSize='lg'>Work place name: </Text>
+                          <Input {...register("newWorkPlaceName")} />
+                        </Box>
+                        <Box display='block' width='45%' paddingTop="16px">
+                          <Text fontSize='lg'>Position: </Text>
+                          <Input {...register("newPosition")} />
+                        </Box>
+                      </Box>
+                      <Box display="flex" justifyContent="space-between">
+                        <Box display='block' width='45%' paddingTop="16px">
+                          <Text fontSize='lg'>Time begin: </Text>
+                          <Input {...register("NewTimeBegin")} />
+                        </Box>
+                        <Box display='block' width='45%' paddingTop="16px">
+                          <Text fontSize='lg'>Time end: </Text>
+                          <Input {...register("newTimeEnd")} />
+                        </Box>
+                      </Box>
+                      <Box display="flex" justifyContent="space-between">
+                        <Box display='block' width='100%' paddingTop="16px">
+                          <Text fontSize='lg'>Accomplishments: </Text>
+                          <Input {...register("newAccomplishments")} />
+                        </Box>
+                      </Box>
+                    </Box>
+                  }
+
+                  <Button marginTop="24px" onClick={() => setAdd(true)}>+</Button>
+
 
                   <Box display="flex" justifyContent="center" paddingTop="36px" >
                     <Button type="submit" colorScheme="blue" width="250px">
@@ -176,34 +266,76 @@ export const Profile = () => {
                       <Box display="flex" justifyContent="space-between">
                         <Box display='block' width='45%' paddingTop="16px">
                           <Text fontSize='lg'>Work place name: </Text>
-                          <Input defaultValue={item.workPlaceName} {...register("workPlaceName")} />
+                          <Input defaultValue={item.workPlaceName}
+                          // {...register("workPlaceName")} 
+                          />
                         </Box>
                         <Box display='block' width='45%' paddingTop="16px">
                           <Text fontSize='lg'>Position: </Text>
-                          <Input defaultValue={item.position} {...register("position")} />
+                          <Input defaultValue={item.position}
+                          // {...register("position")} 
+                          />
                         </Box>
                       </Box>
                       <Box display="flex" justifyContent="space-between">
                         <Box display='block' width='45%' paddingTop="16px">
                           <Text fontSize='lg'>Time begin: </Text>
-                          <Input defaultValue={item.timeBegin} {...register("timeBegin")} />
+                          <Input defaultValue={item.timeBegin}
+                          // {...register("timeBegin")} 
+                          />
                         </Box>
                         <Box display='block' width='45%' paddingTop="16px">
                           <Text fontSize='lg'>Time end: </Text>
-                          <Input defaultValue={item.timeEnd} {...register("timeEnd")} />
+                          <Input defaultValue={item.timeEnd}
+                          // {...register("timeEnd")} 
+                          />
                         </Box>
                       </Box>
                       <Box display="flex" justifyContent="space-between">
                         <Box display='block' width='100%' paddingTop="16px">
                           <Text fontSize='lg'>Accomplishments: </Text>
-                          <Input defaultValue={item.accomplishments} {...register("accomplishments")} />
+                          <Input defaultValue={item.accomplishments}
+                          // {...register("accomplishments")} 
+                          />
                         </Box>
                       </Box>
                     </Box>
                   )
                 })}
 
-                <Button marginTop="24px">+</Button>
+                {
+                  add &&
+                  <Box borderBottom="1px solid grey" paddingBottom="24px">
+                    <Box display="flex" justifyContent="space-between">
+                      <Box display='block' width='45%' paddingTop="16px">
+                        <Text fontSize='lg'>Work place name: </Text>
+                        <Input {...register("newWorkPlaceName")} />
+                      </Box>
+                      <Box display='block' width='45%' paddingTop="16px">
+                        <Text fontSize='lg'>Position: </Text>
+                        <Input {...register("newPosition")} />
+                      </Box>
+                    </Box>
+                    <Box display="flex" justifyContent="space-between">
+                      <Box display='block' width='45%' paddingTop="16px">
+                        <Text fontSize='lg'>Time begin: </Text>
+                        <Input {...register("NewTimeBegin")} />
+                      </Box>
+                      <Box display='block' width='45%' paddingTop="16px">
+                        <Text fontSize='lg'>Time end: </Text>
+                        <Input {...register("newTimeEnd")} />
+                      </Box>
+                    </Box>
+                    <Box display="flex" justifyContent="space-between">
+                      <Box display='block' width='100%' paddingTop="16px">
+                        <Text fontSize='lg'>Accomplishments: </Text>
+                        <Input {...register("newExperience.newAccomplishments")} />
+                      </Box>
+                    </Box>
+                  </Box>
+                }
+
+                <Button marginTop="24px" onClick={() => setAdd(true)}>+</Button>
               </TabPanel>
               <TabPanel>
                 Four
