@@ -59,12 +59,13 @@ export const Profile = () => {
     const educationalInstitutionCategory = educationalInstitutionCategories.find((item: any) => item.code === data.educationalInstitutionCategory);
     const country = countries.find((item: any) => item.id === data.country);
     const newExperience = {
-      workPlaceName: data.newWorkPlaceName,
-      position: data.newPosition,
+      workPlaceName: data.newWorkPlaceNameL,
+      position: data.newPositionL,
       startDate: data.newStartDate,
       endDate: data.newEndDate,
       accomplishments: data.newAccomplishments,
     }
+    console.log('data: ', data);
     console.log('newExperience: ', newExperience);
     const experiences = [...initialState.account.experiences, newExperience];
     // console.log('experiences: ', experiences);
@@ -223,21 +224,21 @@ export const Profile = () => {
                       <Box display="flex" justifyContent="space-between">
                         <Box display='block' width='45%' paddingTop="16px">
                           <Text fontSize='lg'>Work place name: </Text>
-                          <Input {...register("newWorkPlaceName")} />
+                          <Input {...register("newWorkPlaceNameL")} />
                         </Box>
                         <Box display='block' width='45%' paddingTop="16px">
                           <Text fontSize='lg'>Position: </Text>
-                          <Input {...register("newPosition")} />
+                          <Input {...register("newPositionL")} />
                         </Box>
                       </Box>
                       <Box display="flex" justifyContent="space-between">
                         <Box display='block' width='45%' paddingTop="16px">
                           <Text fontSize='lg'>Time begin: </Text>
-                          <Input {...register("NewTimeBegin")} />
+                          <Input {...register("newStartDate")} />
                         </Box>
                         <Box display='block' width='45%' paddingTop="16px">
                           <Text fontSize='lg'>Time end: </Text>
-                          <Input {...register("newTimeEnd")} />
+                          <Input {...register("newEndDate")} />
                         </Box>
                       </Box>
                       <Box display="flex" justifyContent="space-between">
