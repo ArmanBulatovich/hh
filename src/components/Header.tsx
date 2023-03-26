@@ -29,8 +29,7 @@ import { store } from "../store/store";
 export default function Header() {
   const { isOpen, onToggle } = useDisclosure();
   const navigate = useNavigate();
-  const { isAuthenticated } = useSnapshot(store.auth);
-
+  const { isAuthenticated, role } = useSnapshot(store.auth);
   return (
     <Box position={"fixed"} top={0} width={"100%"} zIndex={9999}>
       <Flex

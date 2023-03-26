@@ -20,6 +20,7 @@ import { useSnapshot } from "valtio";
 
 import { store } from "./store/store";
 import { Profile } from "./pages/Profile/Profile";
+import { ProfileVUZ } from "./pages/Profile/ProfileVUZ";
 
 function App() {
   const queryClient = new QueryClient();
@@ -44,7 +45,10 @@ function App() {
             <Route path="/login" element={<Login />} />,
             <Route path="/register" element={<Register />} />,
             {isAuthenticated && (
-              <Route path="/profile" element={<Profile />} />
+              <Route>
+                <Route path="/profilePage" element={<Profile />} />
+                <Route path="/profile" element={<ProfileVUZ />} />
+              </Route>
             )}
           </Route>
         </Routes>

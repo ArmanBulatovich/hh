@@ -4,7 +4,6 @@ import { Box, Button, Input, Select, Tab, TabList, TabPanel, TabPanels, Tabs, Te
 import { useQuery } from "react-query";
 
 import { expressService } from "../../axiosConfig";
-import CustomInput from "../../ui/Input";
 
 export const Profile = () => {
   const { handleSubmit, control, register } = useForm();

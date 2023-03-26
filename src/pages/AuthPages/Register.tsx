@@ -37,7 +37,8 @@ export default function Register() {
           store.auth.token = data.data.accessToken;
           store.auth.isAuthenticated = true;
           navigate('/profile');
-          navigate('/profile');
+          store.auth.role = data.data.user.role.code;
+          localStorage.setItem('role', JSON.stringify(data.data.user.role.code));
         }
       });
   };

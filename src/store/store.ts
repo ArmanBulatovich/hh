@@ -5,6 +5,7 @@ const token = localStorage.getItem('token');
 interface AuthState {
   isAuthenticated: boolean;
   token: string | null;
+  role: string;
 }
 
 interface UserState {
@@ -21,6 +22,7 @@ export const store = proxy<AppState>({
   auth: {
     isAuthenticated: false,
     token: null,
+    role: '',
   },
   user: {
     name: '',
