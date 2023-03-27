@@ -29,7 +29,7 @@ import { store } from "../store/store";
 export default function Header() {
   const { isOpen, onToggle } = useDisclosure();
   const navigate = useNavigate();
-  const { isAuthenticated, role } = useSnapshot(store.auth);
+  const { isAuthenticated } = useSnapshot(store.auth);
   return (
     <Box position={"fixed"} top={0} width={"100%"} zIndex={9999}>
       <Flex
@@ -79,6 +79,7 @@ export default function Header() {
             variant={"link"}
             onClick={() => {
               localStorage.removeItem("token");
+              localStorage.removeItem("role");
               store.auth.isAuthenticated = false;
               navigate("/login");
             }}
@@ -100,6 +101,7 @@ export default function Header() {
               onClick={() => navigate("/login")}
               _hover={{
                 textDecoration: "none",
+                cursor: "pointer",
               }}
             >
               Sign In
@@ -132,47 +134,88 @@ const DesktopNav = () => {
   const linkColor = useColorModeValue("gray.600", "gray.200");
   const linkHoverColor = useColorModeValue("gray.800", "white");
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
-
+  const role = localStorage.getItem("role");
   return (
     <Stack direction={"row"} spacing={4}>
-      {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label}>
-          <Popover trigger={"hover"} placement={"bottom-start"}>
-            <PopoverTrigger>
-              <Link
-                p={2}
-                href={navItem.href ?? "#"}
-                fontSize={"sm"}
-                fontWeight={500}
-                color={linkColor}
-                _hover={{
-                  textDecoration: "none",
-                  color: linkHoverColor,
-                }}
-              >
-                {navItem.label}
-              </Link>
-            </PopoverTrigger>
+      {(role && role === '\"educational_institution\"') && (
+        NAV_ITEMS_FOR_VUZ.map((navItem) => (
+          <Box key={navItem.label}>
+            <Popover trigger={"hover"} placement={"bottom-start"}>
+              <PopoverTrigger>
+                <Link
+                  p={2}
+                  href={navItem.href ?? "#"}
+                  fontSize={"sm"}
+                  fontWeight={500}
+                  color={linkColor}
+                  _hover={{
+                    textDecoration: "none",
+                    color: linkHoverColor,
+                  }}
+                >
+                  {navItem.label}
+                </Link>
+              </PopoverTrigger>
 
-            {navItem.children && (
-              <PopoverContent
-                border={0}
-                boxShadow={"xl"}
-                bg={popoverContentBgColor}
-                p={4}
-                rounded={"xl"}
-                minW={"sm"}
-              >
-                <Stack>
-                  {navItem.children.map((child) => (
-                    <DesktopSubNav key={child.label} {...child} />
-                  ))}
-                </Stack>
-              </PopoverContent>
-            )}
-          </Popover>
-        </Box>
-      ))}
+              {navItem.children && (
+                <PopoverContent
+                  border={0}
+                  boxShadow={"xl"}
+                  bg={popoverContentBgColor}
+                  p={4}
+                  rounded={"xl"}
+                  minW={"sm"}
+                >
+                  <Stack>
+                    {navItem.children.map((child) => (
+                      <DesktopSubNav key={child.label} {...child} />
+                    ))}
+                  </Stack>
+                </PopoverContent>
+              )}
+            </Popover>
+          </Box>
+        )))}
+
+      {(role && role === '\"teacher\"') && (
+        NAV_ITEMS_FOR_TEACHER.map((navItem) => (
+          <Box key={navItem.label}>
+            <Popover trigger={"hover"} placement={"bottom-start"}>
+              <PopoverTrigger>
+                <Link
+                  p={2}
+                  href={navItem.href ?? "#"}
+                  fontSize={"sm"}
+                  fontWeight={500}
+                  color={linkColor}
+                  _hover={{
+                    textDecoration: "none",
+                    color: linkHoverColor,
+                  }}
+                >
+                  {navItem.label}
+                </Link>
+              </PopoverTrigger>
+
+              {navItem.children && (
+                <PopoverContent
+                  border={0}
+                  boxShadow={"xl"}
+                  bg={popoverContentBgColor}
+                  p={4}
+                  rounded={"xl"}
+                  minW={"sm"}
+                >
+                  <Stack>
+                    {navItem.children.map((child) => (
+                      <DesktopSubNav key={child.label} {...child} />
+                    ))}
+                  </Stack>
+                </PopoverContent>
+              )}
+            </Popover>
+          </Box>
+        )))}
     </Stack>
   );
 };
@@ -215,15 +258,21 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
 };
 
 const MobileNav = () => {
+  const role = localStorage.getItem("role");
   return (
     <Stack
       bg={useColorModeValue("white", "gray.800")}
       p={4}
       display={{ md: "none" }}
     >
-      {NAV_ITEMS.map((navItem) => (
-        <MobileNavItem key={navItem.label} {...navItem} />
-      ))}
+      {(role && role === '\"teacher\"') && (
+        NAV_ITEMS_FOR_TEACHER.map((navItem) => (
+          <MobileNavItem key={navItem.label} {...navItem} />
+        )))}
+      {(role && role === '\"educational_institution\"') && (
+        NAV_ITEMS_FOR_VUZ.map((navItem) => (
+          <MobileNavItem key={navItem.label} {...navItem} />
+        )))}
     </Stack>
   );
 };
@@ -288,43 +337,24 @@ interface NavItem {
   href?: string;
 }
 
-const NAV_ITEMS: Array<NavItem> = [
-  {
-    label: "Inspiration",
-    children: [
-      {
-        label: "Explore Design Work",
-        subLabel: "Trending Design to inspire you",
-        href: "#",
-      },
-      {
-        label: "New & Noteworthy",
-        subLabel: "Up-and-coming Designers",
-        href: "#",
-      },
-    ],
-  },
-  {
-    label: "Find Work",
-    children: [
-      {
-        label: "Job Board",
-        subLabel: "Find your dream design job",
-        href: "#",
-      },
-      {
-        label: "Freelance Projects",
-        subLabel: "An exclusive list for contract work",
-        href: "#",
-      },
-    ],
-  },
+const NAV_ITEMS_FOR_VUZ: Array<NavItem> = [
   {
     label: "Learn Design",
     href: "#",
   },
+];
+
+const NAV_ITEMS_FOR_TEACHER: Array<NavItem> = [
+  {
+    label: "Adding Ads",
+    href: "/adding-ads",
+  },
   {
     label: "Hire Designers",
     href: "#",
+  },
+  {
+    label: "Create Course",
+    href: "/create-course",
   },
 ];

@@ -14,6 +14,8 @@ export const ProfileVUZ = () => {
     setEducationalInstitutionCategories,
   ] = useState<any>([]);
   const [countries, setCountries] = useState<any>([]);
+  const [countryId, setCountryId] = useState<any>();
+  const [cities, setCities] = useState<any>([]);
 
   const { isLoading, error, data } = useQuery(
     "users/account",
@@ -28,6 +30,7 @@ export const ProfileVUZ = () => {
     {
       onSuccess: (data) => {
         setInitialState(data.data);
+        setCountryId(data.data.account.country.id);
       },
     }
   );
@@ -50,16 +53,28 @@ export const ProfileVUZ = () => {
       .then((res) => setCountries(res.data.data));
   }, []);
 
+  useEffect(() => {
+    if (countryId) {
+      expressService
+        .get(`references/cities/${countryId}`, {
+          headers: {
+            Authorization: `Bearer ${tokenFromLocalStorage}`,
+          },
+        })
+        .then((res) => setCities(res.data.data));
+    }
+  }, [countryId]);
+
   const onSubmit = (data: any) => {
     const educationalInstitutionCategory =
       educationalInstitutionCategories.find(
         (item: any) => item.code === data.educationalInstitutionCategory
       );
     const country = countries.find((item: any) => item.id === data.country);
-    console.log("data: ", data);
+    const city = cities.find((item: any) => item.id === data.city);
     expressService.patch(
       "educational-institution",
-      { ...data, educationalInstitutionCategory, country },
+      { ...data, educationalInstitutionCategory, country, city },
       {
         headers: {
           Authorization: `Bearer ${tokenFromLocalStorage}`,
@@ -75,7 +90,7 @@ export const ProfileVUZ = () => {
           <Box>
             {initialState && (
               <Box display="flex" justifyContent="space-between">
-                <Box display="block" width="45%" paddingTop="16px">
+                <Box display="block" width="45%" mb="16px">
                   <Text fontSize="lg">Phone Number: </Text>
                   <Input defaultValue={initialState.phoneNumber} disabled />
                 </Box>
@@ -91,7 +106,7 @@ export const ProfileVUZ = () => {
               <Box>
                 <Box display="flex" justifyContent="space-between" mb="16px">
                   <Box width="45%">
-                    <Text fontSize="lg" fontWeight="bold" mb="10px">
+                    <Text fontSize="lg">
                       Название ВУЗа
                     </Text>
                     <Input
@@ -100,7 +115,7 @@ export const ProfileVUZ = () => {
                     />
                   </Box>
                   <Box width="45%">
-                    <Text fontSize="lg" fontWeight="bold" mb="10px">
+                    <Text fontSize="lg">
                       Адрес ВУЗа
                     </Text>
                     <Input
@@ -110,35 +125,12 @@ export const ProfileVUZ = () => {
                   </Box>
                 </Box>
                 <Box display="flex" justifyContent="space-between" mb="16px">
-                  <Box width="45%">
-                    <Text fontSize="lg" fontWeight="bold" mb="10px">
-                      Место нахождения ВУЗа
-                    </Text>
-                    <Input
-                      defaultValue={initialState.account.city.name}
-                      {...register("city")}
-                    />
-                  </Box>
-                  <Box width="45%">
-                    <Text fontSize="lg" fontWeight="bold" mb="10px">
-                      Описание ВУЗа
-                    </Text>
-                    <Input
-                      defaultValue={initialState.account.aboutYourself}
-                      {...register("aboutYourself")}
-                    />
-                  </Box>
-                </Box>
-
-                <Box display="flex" justifyContent="space-between">
-                  <Box display="block" width="45%" paddingTop="16px">
+                  <Box display="block" width="45%">
                     <Text fontSize="lg">
                       Educational institution of category:
                     </Text>
                     <Select
-                      defaultValue={
-                        initialState.account.educationalInstitutionCategory.code
-                      }
+                      defaultValue={initialState.account.educationalInstitutionCategory.name}
                       {...register("educationalInstitutionCategory")}
                     >
                       {educationalInstitutionCategories.map((item: any) => {
@@ -150,13 +142,43 @@ export const ProfileVUZ = () => {
                       })}
                     </Select>
                   </Box>
-                  <Box display="block" width="45%" paddingTop="16px">
+                  <Box width="45%">
+                    <Text fontSize="lg">
+                      Описание ВУЗа
+                    </Text>
+                    <Input
+                      defaultValue={initialState.account.aboutYourself}
+                      {...register("aboutYourself")}
+                    />
+                  </Box>
+                </Box>
+
+                <Box display="flex" justifyContent="space-between">
+                  <Box display="block" width="45%">
                     <Text fontSize="lg">Countries:</Text>
                     <Select
-                      defaultValue={initialState.account.country}
+                      defaultValue={initialState.account.country.name}
                       {...register("country")}
+                      onChange={(e) => {
+                        setCountryId(e.target.value);
+                      }}
                     >
                       {countries.map((item: any) => {
+                        return (
+                          <option key={item.id} value={item.id}>
+                            {item.name}
+                          </option>
+                        );
+                      })}
+                    </Select>
+                  </Box>
+                  <Box display="block" width="45%">
+                    <Text fontSize="lg">Countries:</Text>
+                    <Select
+                      defaultValue={initialState.account.city.name}
+                      {...register("city")}
+                    >
+                      {cities.map((item: any) => {
                         return (
                           <option key={item.id} value={item.id}>
                             {item.name}
@@ -175,7 +197,7 @@ export const ProfileVUZ = () => {
             </Box>
           </form>
         </Box>
-      </Box>
-    </Box>
+      </Box >
+    </Box >
   );
 };

@@ -36,7 +36,7 @@ export default function Register() {
         if (res.status === 201) {
           store.auth.token = data.data.accessToken;
           store.auth.isAuthenticated = true;
-          navigate('/profile');
+          role === 'educational_institution' ? navigate('/profile-vuz') : navigate('/profile-user');
           store.auth.role = data.data.user.role.code;
           localStorage.setItem('role', JSON.stringify(data.data.user.role.code));
         }

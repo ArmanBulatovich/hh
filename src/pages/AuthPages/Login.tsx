@@ -19,7 +19,8 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const token = localStorage.getItem('token');
-  const {isAuthenticated} = useSnapshot(store.auth);
+  const { isAuthenticated } = useSnapshot(store.auth);
+  const role = localStorage.getItem('role');
 
   const loginMutation = useMutation<LoginFormValues, Error, { email: string, password: string }>(
     ({ email, password }) => expressService.post('auth/login', { email, password }).then((response) => response.data),
@@ -27,7 +28,6 @@ export default function Login() {
       onSuccess: (data) => {
         localStorage.setItem('token', data.data.accessToken);
         store.auth.isAuthenticated = true;
-        store.auth.role = data.data.user.role.code;
         localStorage.setItem('role', JSON.stringify(data.data.user.role.code));
       },
       onError: (error) => {
@@ -41,9 +41,10 @@ export default function Login() {
     loginMutation.mutate({ email, password });
   };
 
+
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/profile')
+      role === '\"educational_institution\"' ? navigate('/profile-vuz') : navigate('/profile-user');
     } else {
       navigate('/login')
     }

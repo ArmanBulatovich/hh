@@ -21,11 +21,13 @@ import { useSnapshot } from "valtio";
 import { store } from "./store/store";
 import { Profile } from "./pages/Profile/Profile";
 import { ProfileVUZ } from "./pages/Profile/ProfileVUZ";
+import { AddingAds } from "./pages/AddingAds/AddingAds";
 
 function App() {
   const queryClient = new QueryClient();
   const { isAuthenticated } = useSnapshot(store.auth);
   const tokenFromLocalStorage = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
 
   useEffect(() => {
     if (tokenFromLocalStorage) {
@@ -46,8 +48,20 @@ function App() {
             <Route path="/register" element={<Register />} />,
             {isAuthenticated && (
               <Route>
-                <Route path="/profilePage" element={<Profile />} />
-                <Route path="/profile" element={<ProfileVUZ />} />
+                {
+                  role === '\"teacher\"' &&
+                  <Route>
+                    <Route path="/profile-user" element={<Profile />} />
+                    <Route path='/adding-ads' element={<AddingAds />} />
+                  </Route>
+                }
+                {
+                  role === '\"educational_institution\"' &&
+                  <Route>
+                    <Route path="/profile-vuz" element={<ProfileVUZ />} />
+                  </Route>
+                }
+
               </Route>
             )}
           </Route>
