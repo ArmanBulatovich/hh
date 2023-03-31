@@ -7,7 +7,6 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Login from "./pages/AuthPages/Login";
 import Register from "./pages/AuthPages/Register";
-import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import HomePage from "./pages/HomePage/HomePage";
 import { useSnapshot } from "valtio";
 
