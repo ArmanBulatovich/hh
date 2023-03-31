@@ -1,12 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import {
-  Route,
-  Navigate,
-  RouterProvider,
-  createBrowserRouter,
-  createRoutesFromElements,
-  Routes,
-} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Box } from "@chakra-ui/react";
 
