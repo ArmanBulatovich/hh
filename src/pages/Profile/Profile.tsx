@@ -6,7 +6,7 @@ import { useQuery } from "react-query";
 import { expressService } from "../../axiosConfig";
 
 export const Profile = () => {
-  const { handleSubmit, control, register } = useForm();
+  const { handleSubmit, register } = useForm();
   const [initialState, setInitialState] = useState<any>();
   const [educationalInstitutionCategories, setEducationalInstitutionCategories] = useState<any>([]);
   const [educationDegrees, setEducationDegrees] = useState<any>([]);
@@ -64,26 +64,27 @@ export const Profile = () => {
       endDate: data.newEndDate,
       accomplishments: data.newAccomplishments,
     }
+    // const newExperiences = []
     console.log('data: ', data);
     console.log('newExperience: ', newExperience);
     const experiences = [...initialState.account.experiences, newExperience];
-    // console.log('experiences: ', experiences);
+    console.log('experiences: ', experiences);
 
-    // expressService.patch("teacher", {
-    //   ...data, educationalInstitutionCategory, country,
-    //   experiences
-    // }, {
-    //   headers: {
-    //     Authorization: `Bearer ${tokenFromLocalStorage}`,
-    //   },
-    // })
+    expressService.patch("teacher", {
+      ...data, educationalInstitutionCategory, country, experiences
+    }, {
+      headers: {
+        Authorization: `Bearer ${tokenFromLocalStorage}`,
+      },
+    })
+      .then((res) => console.log(res))
   }
 
   return (
     <Box mt="30px" mb="80px">
       <Box display="flex" justifyContent="center">
         <Box width="80%">
-          <Text fontSize="3xl" display="flex" justifyContent="center" color="blue" paddingBottom="36px" >Profile page</Text>
+          <Text fontSize="3xl" display="flex" justifyContent="center" color="blue" pb="36px">Profile page</Text>
           <Tabs isFitted variant='enclosed'>
             <TabList mb='1em'>
               <Tab fontSize="xl">User data</Tab>
@@ -110,7 +111,7 @@ export const Profile = () => {
                   <Box display="flex" justifyContent="space-between">
                     <Box display='block' width='45%' paddingTop="16px">
                       <Text fontSize='lg'>First name: </Text>
-                      <Input defaultValue={initialState.account.name} {...register("name")} />
+                      <Input defaultValue={initialState.account.name} {...register("name", { required: true, minLength: 2 })} />
                     </Box>
                     <Box display='block' width='45%' paddingTop="16px">
                       <Text fontSize='lg'>Last name: </Text>
@@ -223,33 +224,33 @@ export const Profile = () => {
                       <Box display="flex" justifyContent="space-between">
                         <Box display='block' width='45%' paddingTop="16px">
                           <Text fontSize='lg'>Work place name: </Text>
-                          <Input {...register("newWorkPlaceNameL")} />
+                          <Input {...register("newWorkPlaceNameL", { required: true })} />
                         </Box>
                         <Box display='block' width='45%' paddingTop="16px">
                           <Text fontSize='lg'>Position: </Text>
-                          <Input {...register("newPositionL")} />
+                          <Input {...register("newPositionL", { required: true })} />
                         </Box>
                       </Box>
                       <Box display="flex" justifyContent="space-between">
                         <Box display='block' width='45%' paddingTop="16px">
                           <Text fontSize='lg'>Time begin: </Text>
-                          <Input {...register("newStartDate")} />
+                          <Input {...register("newStartDate", { required: true })} />
                         </Box>
                         <Box display='block' width='45%' paddingTop="16px">
                           <Text fontSize='lg'>Time end: </Text>
-                          <Input {...register("newEndDate")} />
+                          <Input {...register("newEndDate", { required: true })} />
                         </Box>
                       </Box>
                       <Box display="flex" justifyContent="space-between">
                         <Box display='block' width='100%' paddingTop="16px">
                           <Text fontSize='lg'>Accomplishments: </Text>
-                          <Input {...register("newAccomplishments")} />
+                          <Input {...register("newAccomplishments", { required: true })} />
                         </Box>
                       </Box>
                     </Box>
                   }
 
-                  <Button marginTop="24px" onClick={() => setAdd(true)}>+</Button>
+                  <Button type="submit" marginTop="24px" onClick={() => { setAdd(false); setAdd(true); }}>+</Button>
 
 
                   <Box display="flex" justifyContent="center" paddingTop="36px" >
@@ -260,7 +261,7 @@ export const Profile = () => {
                 </form>
               </TabPanel>
               <TabPanel>
-                {initialState.account.experiences.map((item: any, index: any) => {
+                {/* {initialState.account.experiences.map((item: any, index: any) => {
                   return (
                     <Box borderBottom="1px solid grey" paddingBottom="24px" key={index}>
                       <Box display="flex" justifyContent="space-between">
@@ -335,7 +336,7 @@ export const Profile = () => {
                   </Box>
                 }
 
-                <Button marginTop="24px" onClick={() => setAdd(true)}>+</Button>
+                <Button marginTop="24px" onClick={() => setAdd(true)}>+</Button> */}
               </TabPanel>
               <TabPanel>
                 Four
