@@ -12,6 +12,7 @@ export const Profile = () => {
   const [educationDegrees, setEducationDegrees] = useState<any>([]);
   const [countries, setCountries] = useState<any>([]);
   const [add, setAdd] = useState(false);
+  const [showPlus, setShowPlus] = useState(true);
   const tokenFromLocalStorage = localStorage.getItem("token");
 
   const { isLoading, error, data } = useQuery(
@@ -77,7 +78,14 @@ export const Profile = () => {
         Authorization: `Bearer ${tokenFromLocalStorage}`,
       },
     })
-      .then((res) => console.log(res))
+      .then((res) => {
+        if (res.status === 200) {
+          setShowPlus(true);
+          setAdd(false);
+          // setInitialState(res.data.data);
+          console.log('res: ', res.data.data)
+        }
+      })
   }
 
   return (
@@ -182,13 +190,13 @@ export const Profile = () => {
                         <Box display="flex" justifyContent="space-between">
                           <Box display='block' width='45%' paddingTop="16px">
                             <Text fontSize='lg'>Work place name: </Text>
-                            <Input defaultValue={item.workPlaceName}
+                            <Input defaultValue={item.workPlaceName} disabled
                             // {...register("workPlaceName")}
                             />
                           </Box>
                           <Box display='block' width='45%' paddingTop="16px">
                             <Text fontSize='lg'>Position: </Text>
-                            <Input defaultValue={item.position}
+                            <Input defaultValue={item.position} disabled
                             // {...register("position")} 
                             />
                           </Box>
@@ -196,13 +204,13 @@ export const Profile = () => {
                         <Box display="flex" justifyContent="space-between">
                           <Box display='block' width='45%' paddingTop="16px">
                             <Text fontSize='lg'>Time begin: </Text>
-                            <Input defaultValue={item.timeBegin}
+                            <Input defaultValue={item.timeBegin} disabled
                             // {...register("timeBegin")} 
                             />
                           </Box>
                           <Box display='block' width='45%' paddingTop="16px">
                             <Text fontSize='lg'>Time end: </Text>
-                            <Input defaultValue={item.timeEnd}
+                            <Input defaultValue={item.timeEnd} disabled
                             // {...register("timeEnd")} 
                             />
                           </Box>
@@ -210,7 +218,7 @@ export const Profile = () => {
                         <Box display="flex" justifyContent="space-between">
                           <Box display='block' width='100%' paddingTop="16px">
                             <Text fontSize='lg'>Accomplishments: </Text>
-                            <Input defaultValue={item.accomplishments}
+                            <Input defaultValue={item.accomplishments} disabled
                             // {...register("accomplishments")} 
                             />
                           </Box>
@@ -218,6 +226,7 @@ export const Profile = () => {
                       </Box>
                     )
                   })}
+                  {!showPlus && <Button type="submit" marginTop="24px" onClick={() => { setAdd(false); setShowPlus(true); }}>-</Button>}
                   {
                     add &&
                     <Box borderBottom="1px solid grey" paddingBottom="24px">
@@ -250,7 +259,7 @@ export const Profile = () => {
                     </Box>
                   }
 
-                  <Button type="submit" marginTop="24px" onClick={() => { setAdd(false); setAdd(true); }}>+</Button>
+                  {showPlus && <Button type="submit" marginTop="24px" onClick={() => { setAdd(true); setShowPlus(false); }}>+</Button>}
 
 
                   <Box display="flex" justifyContent="center" paddingTop="36px" >
