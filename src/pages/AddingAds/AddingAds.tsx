@@ -104,6 +104,7 @@ export const AddingAds = () => {
     const category = categories.find(
       (item: any) => item.name === data.category
     );
+    const subjects = selectedSubj;
     console.log(data.category);
     console.log({
       ...data,
@@ -112,7 +113,7 @@ export const AddingAds = () => {
       language,
       type,
       category,
-      selectedSubj,
+      subjects,
     });
   };
 
