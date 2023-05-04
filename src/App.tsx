@@ -14,6 +14,7 @@ import { store } from "./store/store";
 import { Profile } from "./pages/Profile/Profile";
 import { ProfileVUZ } from "./pages/Profile/ProfileVUZ";
 import { AddingAds } from "./pages/AddingAds/AddingAds";
+import { Documents } from "./pages/Documents/Documents";
 
 function App() {
   const queryClient = new QueryClient();
@@ -45,6 +46,7 @@ function App() {
                   <Route>
                     <Route path="/profile-user" element={<Profile />} />
                     <Route path='/adding-ads' element={<AddingAds />} />
+                    <Route path='/documents' element={<Documents />} />
                   </Route>
                 }
                 {

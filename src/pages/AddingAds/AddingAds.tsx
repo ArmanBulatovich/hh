@@ -1,42 +1,25 @@
 import { Box, Button, Input, Select, Switch, Text } from "@chakra-ui/react";
-import { useState, useEffect, SetStateAction } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { MultiSelect, useMultiSelect } from "chakra-multiselect";
+import MultiSelect from 'react-select';
+import makeAnimated from 'react-select/animated';
 
 import { expressService } from "../../axiosConfig";
 
 export const AddingAds = () => {
-  const subj = [
-    {
-      id: "1",
-      value: "1",
-      label: "1",
-    },
-    {
-      id: "2",
-      value: "2",
-      label: "2",
-    },
-  ];
+  const animatedComponents = makeAnimated();
   const tokenFromLocalStorage = localStorage.getItem("token");
   const headers = { Authorization: `Bearer ${tokenFromLocalStorage}` };
-  const { handleSubmit, control, register } = useForm();
-  const [
-    educationalInstitutionCategories,
-    setEducationalInstitutionCategories,
-  ] = useState<any>([]);
+  const { handleSubmit, register } = useForm();
+  const [educationalInstitutionCategories, setEducationalInstitutionCategories] = useState<any>([]);
   const [org, setOrg] = useState<any>();
-  console.log("org: ", org);
   const [orgId, setOrgId] = useState<any>();
-  console.log("orgId: ", orgId);
   const [currencies, setCurrencies] = useState<any>([]);
   const [subjects, setSubjects] = useState<any>([]);
   const [languages, setLanguages] = useState<any>([]);
   const [types, setTypes] = useState<any>([]);
   const [categories, setCategories] = useState<any>([]);
-  const [selectedSubj, setSelectedSubj] = useState<any>([]);
-  console.log("selectedSubj: ", selectedSubj);
-  console.log("subjects: ", subjects);
+  const [selectedSubjects, setSelectedSubjects] = useState<any>([]);
 
   useEffect(() => {
     expressService
@@ -75,7 +58,6 @@ export const AddingAds = () => {
       expressService
         .get(`references/subject-categories/${orgId}`, { headers: headers })
         .then((res) => {
-          console.log("res.data: ", res.data.data);
           setSubjects(res.data.data);
         });
 
@@ -86,10 +68,6 @@ export const AddingAds = () => {
         });
     }
   }, [org, orgId]);
-
-  // const handleSelectionChange = (selectedItems: any) => {
-  //   setSelectedSubj(selectedItems);
-  // };
 
   const onSubmit = (data: any) => {
     const educationalInstitutionCategory =
@@ -104,17 +82,14 @@ export const AddingAds = () => {
     const category = categories.find(
       (item: any) => item.name === data.category
     );
-    const subjects = selectedSubj;
-    console.log(data.category);
-    console.log({
-      ...data,
-      educationalInstitutionCategory,
-      currency,
-      language,
-      type,
-      category,
-      subjects,
-    });
+    const subjects = selectedSubjects;
+    const price = Number(data.price);
+    expressService.post('documents', { ...data, educationalInstitutionCategory, currency, language, type, category, subjects, price }, { headers: headers })
+      .then(res => {
+        if (res.status === 200) {
+          console.log("res.data: ", res.data);
+        }
+      })
   };
 
   return (
@@ -131,16 +106,13 @@ export const AddingAds = () => {
             </Box>
             <Box mt="30px">
               <Text>Add description</Text>
-              <Input
-                placeholder="Add description"
-                {...register("description")}
-              />
+              <Input placeholder="Add description" {...register("description")} />
             </Box>
             <Box mt="30px">
               <Text fontSize="lg">Educational institution of category:</Text>
               <Select
-                placeholder="Select educational institution category"
                 {...register("educationalInstitutionCategory")}
+                placeholder="Select educational institution category"
                 onChange={(e) => setOrg(e.target.value)}
               >
                 {educationalInstitutionCategories.map((item: any) => {
@@ -167,30 +139,18 @@ export const AddingAds = () => {
             {orgId && (
               <>
                 <Box mt="30px">
+                  <Text fontSize="lg">Subjects:</Text>
                   <MultiSelect
-                    options={subj}
-                    value={selectedSubj}
-                    label="Subjects:"
-                    onChange={setSelectedSubj}
-                    placeholder="Select subjects"
+                    closeMenuOnSelect={false}
+                    components={animatedComponents}
+                    options={subjects}
+                    onChange={setSelectedSubjects}
+                    isMulti
                   />
-                  {/* <Text fontSize="lg">Subject:</Text>
-              <Select {...register("subject")}>
-                {subjects.map((item: any) => {
-                  return (
-                    <option key={item.id} value={item.code}>
-                      {item.name}
-                    </option>
-                  );
-                })} 
-              </Select>*/}
                 </Box>
                 <Box mt="30px">
                   <Text fontSize="lg">Category of document:</Text>
-                  <Select
-                    placeholder="Select category"
-                    {...register("category")}
-                  >
+                  <Select placeholder="Select category"{...register("category")}>
                     {categories.map((item: any) => {
                       return (
                         <option key={item.id} value={item.code}>
@@ -202,20 +162,6 @@ export const AddingAds = () => {
                 </Box>
               </>
             )}
-
-            {/* <Box mt="30px">
-              <Text fontSize="lg">Subject:</Text>
-              <Select {...register("subject")}>
-                {subjects.map((item: any) => {
-                  return (
-                    <option key={item.id} value={item.code}>
-                      {item.name}
-                    </option>
-                  );
-                })}
-              </Select>
-            </Box> */}
-
             <Box mt="30px">
               <Text>Add price</Text>
               <Input placeholder="Add price" {...register("price")} />
@@ -261,9 +207,7 @@ export const AddingAds = () => {
           </Box>
         </Box>
         <Box display="flex" justifyContent="center" pb={10}>
-          <Button type="submit" colorScheme="blue" width="250px">
-            Submit
-          </Button>
+          <Button type="submit" colorScheme="blue" width="250px">Submit</Button>
         </Box>
       </form>
     </Box>

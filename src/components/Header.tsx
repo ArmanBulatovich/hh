@@ -350,11 +350,11 @@ const NAV_ITEMS_FOR_TEACHER: Array<NavItem> = [
     href: "/adding-ads",
   },
   {
-    label: "Hire Designers",
-    href: "#",
+    label: "Documents",
+    href: "/documents",
   },
-  {
-    label: "Create Course",
-    href: "/create-course",
-  },
+  // {
+  //   label: "Create Course",
+  //   href: "/create-course",
+  // },
 ];
