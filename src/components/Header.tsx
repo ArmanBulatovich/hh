@@ -351,7 +351,23 @@ const NAV_ITEMS_FOR_TEACHER: Array<NavItem> = [
   },
   {
     label: "Documents",
-    href: "/documents",
+    children: [
+      {
+        label: 'Own document(s)',
+        subLabel: 'Own document(s) for contract work',
+        href: "/documents/uploaded",
+      },
+      {
+        label: 'My bought document(s)',
+        subLabel: 'An exclusive lists of document(s) for contract work',
+        href: '/documents/bought',
+      },
+      {
+        label: 'My not bought documents',
+        subLabel: 'An exclusive lists of document(s) for contract work',
+        href: "/documents/not-bought",
+      }
+    ],
   },
   // {
   //   label: "Create Course",

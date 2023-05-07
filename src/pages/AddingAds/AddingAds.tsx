@@ -113,7 +113,7 @@ export const AddingAds = () => {
               <Select
                 {...register("educationalInstitutionCategory")}
                 placeholder="Select educational institution category"
-                onChange={(e) => setOrg(e.target.value)}
+                onChange={(e: any) => setOrg(e.target.value)}
               >
                 {educationalInstitutionCategories.map((item: any) => {
                   return (
