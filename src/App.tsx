@@ -17,6 +17,8 @@ import { AddingAds } from "./pages/AddingAds/AddingAds";
 import { Documents } from "./pages/Documents/Documents";
 import { BuyDocument } from "./pages/Documents/BuyDocument";
 import { GetBoughtDocuments } from "./pages/Documents/GetBoughtDocuments";
+import { GetTeachers } from "./pages/GetTeacher/GetTeachers";
+import { GetOneTeacher } from "./pages/GetTeacher/GetOneTeacher";
 
 function App() {
   const queryClient = new QueryClient();
@@ -56,6 +58,8 @@ function App() {
                   role === '\"educational_institution\"' &&
                   <Route>
                     <Route path="/profile-vuz" element={<ProfileVUZ />} />
+                    <Route path='/get-teachers' element={<GetTeachers />} />
+                    <Route path='/get-teachers/:id' element={<GetOneTeacher />} />
                   </Route>
                 }
 

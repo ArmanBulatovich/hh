@@ -339,8 +339,8 @@ interface NavItem {
 
 const NAV_ITEMS_FOR_VUZ: Array<NavItem> = [
   {
-    label: "Learn Design",
-    href: "#",
+    label: "Teachers",
+    href: "/get-teachers",
   },
 ];
 
