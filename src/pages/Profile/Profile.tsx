@@ -65,11 +65,8 @@ export const Profile = () => {
       endDate: data.newEndDate,
       accomplishments: data.newAccomplishments,
     }
-    // const newExperiences = []
-    console.log('data: ', data);
     console.log('newExperience: ', newExperience);
     const experiences = [...initialState.account.experiences, newExperience];
-    console.log('experiences: ', experiences);
 
     expressService.patch("teacher", {
       ...data, educationalInstitutionCategory, country, experiences
@@ -257,7 +254,6 @@ export const Profile = () => {
           </form>
         </Box>
       </Box>
-
     </Box >
   );
 };
