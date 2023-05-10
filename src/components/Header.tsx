@@ -15,6 +15,12 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  Menu,
+  MenuList,
+  MenuItem,
+  MenuButton,
+  MenuGroup,
+  MenuDivider,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -30,6 +36,7 @@ export default function Header() {
   const { isOpen, onToggle } = useDisclosure();
   const navigate = useNavigate();
   const { isAuthenticated } = useSnapshot(store.auth);
+  const role = localStorage.getItem('role');
   return (
     <Box position={"fixed"} top={0} width={"100%"} zIndex={9999}>
       <Flex
@@ -73,19 +80,33 @@ export default function Header() {
           </Flex>
         </Flex>
         {isAuthenticated ? (
-          <Button
-            fontSize={"sm"}
-            fontWeight={400}
-            variant={"link"}
-            onClick={() => {
-              localStorage.removeItem("token");
-              localStorage.removeItem("role");
-              store.auth.isAuthenticated = false;
-              navigate("/login");
-            }}
-          >
-            Logout
-          </Button>
+          <Menu>
+            <MenuButton as={Button} colorScheme='pink'>
+              Profile
+            </MenuButton>
+            <MenuList>
+              <MenuGroup title='Profile'>
+                <MenuItem onClick={() => { if (isAuthenticated) { role === '\"educational_institution\"' ? navigate('/profile-vuz') : navigate('/profile-user'); } }}>
+                  My Account
+                </MenuItem>
+                <MenuItem
+                  onClick={() => navigate("/balance")}
+                >Payments</MenuItem>
+              </MenuGroup>
+              <MenuDivider />
+              <MenuGroup title='Help'>
+                <MenuItem>Docs</MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("role");
+                    store.auth.isAuthenticated = false;
+                    navigate("/login");
+                  }}
+                >Logout</MenuItem>
+              </MenuGroup>
+            </MenuList>
+          </Menu>
         ) : (
           <Stack
             flex={{ base: 1, md: 0 }}
@@ -126,7 +147,7 @@ export default function Header() {
       <Collapse in={isOpen} animateOpacity>
         <MobileNav />
       </Collapse>
-    </Box>
+    </Box >
   );
 }
 
