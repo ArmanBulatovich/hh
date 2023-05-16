@@ -84,7 +84,8 @@ export const AddingAds = () => {
     );
     const subjects = selectedSubjects;
     const price = Number(data.price);
-    expressService.post('documents', { ...data, educationalInstitutionCategory, currency, language, type, category, subjects, price }, { headers: headers })
+    const url = "";
+    expressService.post('documents', { ...data, educationalInstitutionCategory, currency, language, type, category, subjects, price, url }, { headers: headers })
       .then(res => {
         if (res.status === 200) {
           console.log("res.data: ", res.data);
@@ -165,10 +166,6 @@ export const AddingAds = () => {
             <Box mt="30px">
               <Text>Add price</Text>
               <Input placeholder="Add price" {...register("price")} />
-            </Box>
-            <Box mt="30px">
-              <Text>URL: </Text>
-              <Input placeholder="URL" {...register("url")} />
             </Box>
             <Box display="flex" justifyContent="space-between">
               <Box mt="30px">

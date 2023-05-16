@@ -99,7 +99,7 @@ export const GetOneTeacher = () => {
               </h2>
               <AccordionPanel pb={4}>
                 {teacher?.experiences.map((item: any) => (
-                  <Box mt={5}>
+                  <Box mt={5} key={item.id}>
                     <Box display="flex">
                       <Text width="50%">Место работы: {item.workPlaceName}</Text>
                       <Text width="50%">Должность: {item.position}</Text>
@@ -125,7 +125,7 @@ export const GetOneTeacher = () => {
               //     );
               //   }}
               >
-                Buy
+                Buy contact of teacher
               </Button>
             }
           </Box>

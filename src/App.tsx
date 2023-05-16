@@ -18,6 +18,7 @@ import { BuyDocument } from "./pages/Documents/BuyDocument";
 import { GetBoughtDocuments } from "./pages/Documents/GetBoughtDocuments";
 import { GetTeachers } from "./pages/GetTeacher/GetTeachers";
 import { GetOneTeacher } from "./pages/GetTeacher/GetOneTeacher";
+import Balance from "./pages/Balance/Balance";
 
 function App() {
   const queryClient = new QueryClient();
@@ -51,6 +52,7 @@ function App() {
                     <Route path='/adding-ads' element={<AddingAds />} />
                     <Route path='/documents/not-bought/:id' element={<BuyDocument />} />
                     <Route path='/documents/:status' element={<GetBoughtDocuments />} />
+                    <Route path='/balance' element={<Balance />} />
                   </Route>
                 }
                 {
@@ -59,9 +61,9 @@ function App() {
                     <Route path="/profile-vuz" element={<ProfileVUZ />} />
                     <Route path='/get-teachers' element={<GetTeachers />} />
                     <Route path='/get-teachers/:id' element={<GetOneTeacher />} />
+                    <Route path='/balance' element={<Balance />} />
                   </Route>
                 }
-
               </Route>
             )}
           </Route>
