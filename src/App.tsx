@@ -14,7 +14,6 @@ import { store } from "./store/store";
 import { Profile } from "./pages/Profile/Profile";
 import { ProfileVUZ } from "./pages/Profile/ProfileVUZ";
 import { AddingAds } from "./pages/AddingAds/AddingAds";
-import { Documents } from "./pages/Documents/Documents";
 import { BuyDocument } from "./pages/Documents/BuyDocument";
 import { GetBoughtDocuments } from "./pages/Documents/GetBoughtDocuments";
 import { GetTeachers } from "./pages/GetTeacher/GetTeachers";
