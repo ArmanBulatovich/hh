@@ -65,14 +65,15 @@ export const GetBoughtDocuments = () => {
               </Thead>
               <Tbody>
                 {documents.map((item: any) => (
-                  <Tr 
-                  cursor={status !== 'not-bought' ? 'not-allowed' : 'pointer'}
-                  onClick={() => {
-                    // navigate(`${item.id}`)
-                    if (status === 'not-bought') {
-                      navigate(`${item.id}`);
-                    }
-                    }}>
+                  <Tr
+                    cursor={status !== "not-bought" ? "not-allowed" : "pointer"}
+                    onClick={() => {
+                      // navigate(`${item.id}`)
+                      if (status === "not-bought") {
+                        navigate(`${item.id}`);
+                      }
+                    }}
+                  >
                     <Td>{item.name}</Td>
                     <Td>{item.language.name}</Td>
                     {/* <Td>{item.subjects.map((item: any) => {
