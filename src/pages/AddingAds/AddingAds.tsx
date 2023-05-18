@@ -94,14 +94,14 @@ export const AddingAds = () => {
   };
 
   return (
-    <Box mt="30px" mb="80px">
+    <Box mt="10px" mb="30px">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box display="flex" justifyContent="center">
-          <Box width="80%" mb={14}>
+          <Box width="80%" mb="20px">
             <Text fontSize={28} display="flex" justifyContent="center">
               Adding ads
             </Text>
-            <Box mt="30px">
+            <Box mt="20px">
               <Text>Add title</Text>
               <Input placeholder="Add title" {...register("name")} />
             </Box>
@@ -151,7 +151,7 @@ export const AddingAds = () => {
                 </Box>
                 <Box mt="30px">
                   <Text fontSize="lg">Category of document:</Text>
-                  <Select placeholder="Select category"{...register("category")}>
+                  <Select placeholder="Select category" {...register("category")}>
                     {categories.map((item: any) => {
                       return (
                         <option key={item.id} value={item.code}>

@@ -36,7 +36,8 @@ export default function Balance() {
       .then((res) => {
         if (res.status === 200) {
           setInitialState({ ...initialState, balance: (initialState.balance + Number(data.balance)) });
-          alert('Баланс пополнен');
+          alert('The balance is replenished');
+          // setInitialState(null);
         }
       })
   };
@@ -47,11 +48,11 @@ export default function Balance() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box>
             <Box display='block' paddingTop="16px">
-              <Text fontSize="2xl">Balance: {initialState?.balance}</Text>
-              <Input type="number" width="100%" {...register("balance", { required: true })} />
+              <Text fontSize="2xl">Balance: {initialState?.balance} tenge</Text>
+              <Input type="number" width="100%" defaultValue={0} {...register("balance", { required: true })} />
             </Box>
           </Box>
-          <Button type="submit" colorScheme="blue" width="250px" mt={10}>Пополнить</Button>
+          <Button type="submit" colorScheme="blue" width="250px" mt={10}>Replenish</Button>
         </form>
       </Box>
     </Box>

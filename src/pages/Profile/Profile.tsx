@@ -168,7 +168,7 @@ export const Profile = () => {
               <Box display='block' width='45%' paddingTop="16px"></Box>
             </Box>
 
-            {initialState?.account?.experiences.map((item: any, index: any) => {
+            {/* {initialState?.account?.experiences.map((item: any, index: any) => {
               return (
                 <Box borderBottom="1px solid grey" paddingBottom="24px" key={index}>
                   <Box display="flex" justifyContent="space-between">
@@ -244,7 +244,7 @@ export const Profile = () => {
             }
 
             {showPlus && <Button type="submit" marginTop="24px" onClick={() => { setAdd(true); setShowPlus(false); }}>+</Button>}
-
+ */}
 
             <Box display="flex" justifyContent="center" paddingTop="36px" >
               <Button type="submit" colorScheme="blue" width="250px">

@@ -1,29 +1,17 @@
 import {
   Box,
   Button,
-  Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  Input,
   Table,
-  TableCaption,
-  TableContainer,
   Tbody,
   Td,
   Text,
-  Th,
-  Thead,
   Tr,
-  useDisclosure,
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
+  TableContainer,
 } from "@chakra-ui/react";
 import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router";
@@ -34,14 +22,11 @@ export const GetOneTeacher = () => {
   const { id } = useParams();
   const headers = { Authorization: `Bearer ${tokenFromLocalStorage}` };
   const [teacher, setTeacher] = useState<any>();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef();
 
   useEffect(() => {
     expressService
       .get(`teacher/${id}`, { headers: headers })
       .then((res: any) => {
-        console.log(res.data.data);
         setTeacher(res.data.data);
       });
   }, [id]);
@@ -58,40 +43,36 @@ export const GetOneTeacher = () => {
 
   return (
     <Box>
-      <Text display="flex" justifyContent="center" fontSize={24} mb={5}>
+      <Text display="flex" justifyContent="center" fontSize={24} mb={5} fontWeight={500}>
         {teacher?.name} {teacher?.middleName} {teacher?.lastName}
       </Text>
       <Box display="flex" justifyContent="center">
         <TableContainer width="80%">
           <Table variant="simple">
             <Tbody>
-              {/* <Tr>
-                  <Td>Full name: </Td>
-                  <Td>{teacher?.name} {teacher?.middleName} {teacher?.lastName}</Td>
-                </Tr> */}
               <Tr>
-                <Td>About yourself: </Td>
-                <Td>{teacher?.aboutYourself}</Td>
+                <Td fontSize="18px">About yourself: </Td>
+                <Td fontSize="18px">{teacher?.aboutYourself}</Td>
               </Tr>
               <Tr>
-                <Td>Wanted position: </Td>
-                <Td>{teacher?.wantedPosition}</Td>
+                <Td fontSize="18px">Wanted position: </Td>
+                <Td fontSize="18px">{teacher?.wantedPosition}</Td>
               </Tr>
               <Tr>
-                <Td>Country: </Td>
-                <Td>{teacher?.country && teacher?.country.name}</Td>
+                <Td fontSize="18px">Country: </Td>
+                <Td fontSize="18px">{teacher?.country && teacher?.country.name}</Td>
               </Tr>
               <Tr>
-                <Td>City: </Td>
-                <Td>{teacher?.city && teacher?.city.name}</Td>
+                <Td fontSize="18px">City: </Td>
+                <Td fontSize="18px">{teacher?.city && teacher?.city.name}</Td>
               </Tr>
             </Tbody>
           </Table>
           <Accordion defaultIndex={[0]} allowMultiple width="100%">
             <AccordionItem>
               <h2>
-                <AccordionButton>
-                  <Box as="span" flex="1" textAlign="left">
+                <AccordionButton mt="20px">
+                  <Box as="span" flex="1" textAlign="left" fontSize="18px" fontWeight="500">
                     Experiences
                   </Box>
                   <AccordionIcon />
@@ -101,12 +82,12 @@ export const GetOneTeacher = () => {
                 {teacher?.experiences.map((item: any) => (
                   <Box mt={5} key={item.id}>
                     <Box display="flex">
-                      <Text width="50%">Место работы: {item.workPlaceName}</Text>
-                      <Text width="50%">Должность: {item.position}</Text>
+                      <Text width="50%" fontSize="18px">Место работы: {item.workPlaceName}</Text>
+                      <Text width="50%" fontSize="18px">Должность: {item.position}</Text>
                     </Box>
                     <Box display="flex">
-                      <Text width="50%">Дата начала: {item.timeBegin}</Text>
-                      <Text width="50%">Дата окончания: {item.timeEnd}</Text>
+                      <Text width="50%" fontSize="18px">Дата начала: {item.timeBegin}</Text>
+                      <Text width="50%" fontSize="18px">Дата окончания: {item.timeEnd}</Text>
                     </Box>
                   </Box>
                 ))}

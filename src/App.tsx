@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Box } from "@chakra-ui/react";
@@ -19,6 +19,7 @@ import { GetBoughtDocuments } from "./pages/Documents/GetBoughtDocuments";
 import { GetTeachers } from "./pages/GetTeacher/GetTeachers";
 import { GetOneTeacher } from "./pages/GetTeacher/GetOneTeacher";
 import Balance from "./pages/Balance/Balance";
+import { AllDocuments } from "./pages/Documents/AllDocuments";
 
 function App() {
   const queryClient = new QueryClient();
@@ -51,7 +52,7 @@ function App() {
                     <Route path="/profile-user" element={<Profile />} />
                     <Route path='/adding-ads' element={<AddingAds />} />
                     <Route path='/documents/not-bought/:id' element={<BuyDocument />} />
-                    <Route path='/documents/:status' element={<GetBoughtDocuments />} />
+                    <Route path='/documents' element={<AllDocuments />} />
                     <Route path='/balance' element={<Balance />} />
                   </Route>
                 }
@@ -61,6 +62,7 @@ function App() {
                     <Route path="/profile-vuz" element={<ProfileVUZ />} />
                     <Route path='/get-teachers' element={<GetTeachers />} />
                     <Route path='/get-teachers/:id' element={<GetOneTeacher />} />
+                    <Route path='/documents' element={<AllDocuments />} />
                     <Route path='/balance' element={<Balance />} />
                   </Route>
                 }
@@ -69,9 +71,9 @@ function App() {
           </Route>
         </Routes>
       </Box>
-      <Box position="relative" width="100%">
+      {/* <Box position="relative" width="100%">
         <Footer />
-      </Box>
+      </Box> */}
     </QueryClientProvider>
   );
 }
