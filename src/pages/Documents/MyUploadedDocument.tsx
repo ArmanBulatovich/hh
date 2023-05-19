@@ -5,7 +5,7 @@ import { ChevronDownIcon, ChevronUpIcon, SearchIcon } from "@chakra-ui/icons";
 
 import { expressService } from "../../axiosConfig";
 
-export const GetBoughtDocuments = () => {
+export const MyUploadedDocuments = () => {
   const navigate = useNavigate();
   const tokenFromLocalStorage = localStorage.getItem("token");
   const headers = { Authorization: `Bearer ${tokenFromLocalStorage}` };
@@ -13,7 +13,8 @@ export const GetBoughtDocuments = () => {
   const [openFilters, setOpenFilters] = useState<boolean>(false);
 
   useEffect(() => {
-    expressService.get("users/bought-documents", { headers: headers }).then((res) => {
+    expressService.get("documents/teacher/uploaded", { headers: headers }).then((res) => {
+      console.log(res.data.data)
       setDocuments(res.data.data);
     });
   }, []);

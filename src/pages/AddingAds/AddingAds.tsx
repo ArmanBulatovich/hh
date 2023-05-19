@@ -84,7 +84,7 @@ export const AddingAds = () => {
     );
     const subjects = selectedSubjects;
     const price = Number(data.price);
-    const url = "";
+    const url = "asd";
     expressService.post('documents', { ...data, educationalInstitutionCategory, currency, language, type, category, subjects, price, url }, { headers: headers })
       .then(res => {
         if (res.status === 200) {

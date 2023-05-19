@@ -14,12 +14,12 @@ import { store } from "./store/store";
 import { Profile } from "./pages/Profile/Profile";
 import { ProfileVUZ } from "./pages/Profile/ProfileVUZ";
 import { AddingAds } from "./pages/AddingAds/AddingAds";
-import { BuyDocument } from "./pages/Documents/BuyDocument";
 import { GetBoughtDocuments } from "./pages/Documents/GetBoughtDocuments";
 import { GetTeachers } from "./pages/GetTeacher/GetTeachers";
 import { GetOneTeacher } from "./pages/GetTeacher/GetOneTeacher";
 import Balance from "./pages/Balance/Balance";
 import { AllDocuments } from "./pages/Documents/AllDocuments";
+import { MyUploadedDocuments } from "./pages/Documents/MyUploadedDocument";
 
 function App() {
   const queryClient = new QueryClient();
@@ -51,7 +51,8 @@ function App() {
                   <Route>
                     <Route path="/profile-user" element={<Profile />} />
                     <Route path='/adding-ads' element={<AddingAds />} />
-                    <Route path='/documents/not-bought/:id' element={<BuyDocument />} />
+                    <Route path='/documents/bought' element={<GetBoughtDocuments />} />
+                    <Route path='/documents/uploaded' element={<MyUploadedDocuments />} />
                     <Route path='/documents' element={<AllDocuments />} />
                     <Route path='/balance' element={<Balance />} />
                   </Route>
@@ -62,6 +63,7 @@ function App() {
                     <Route path="/profile-vuz" element={<ProfileVUZ />} />
                     <Route path='/get-teachers' element={<GetTeachers />} />
                     <Route path='/get-teachers/:id' element={<GetOneTeacher />} />
+                    <Route path='/documents/bought' element={<GetBoughtDocuments />} />
                     <Route path='/documents' element={<AllDocuments />} />
                     <Route path='/balance' element={<Balance />} />
                   </Route>
