@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClientProvider } from "react-query";
 import { Box } from "@chakra-ui/react";
 
 import Footer from "./components/Footer";
@@ -20,9 +20,10 @@ import { GetOneTeacher } from "./pages/GetTeacher/GetOneTeacher";
 import Balance from "./pages/Balance/Balance";
 import { AllDocuments } from "./pages/Documents/AllDocuments";
 import { MyUploadedDocuments } from "./pages/Documents/MyUploadedDocument";
+import { queryClient } from "./queryClient";
+
 
 function App() {
-  const queryClient = new QueryClient();
   const { isAuthenticated } = useSnapshot(store.auth);
   const tokenFromLocalStorage = localStorage.getItem("token");
   const role = localStorage.getItem("role");
