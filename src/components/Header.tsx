@@ -76,7 +76,7 @@ export default function Header() {
         </Flex>
         {isAuthenticated ? (
           <Menu>
-            <MenuButton as={Button} colorScheme='pink'>
+            <MenuButton as={Button} colorScheme='purple'>
               Profile
             </MenuButton>
             <MenuList>
