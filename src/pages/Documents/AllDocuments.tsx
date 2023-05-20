@@ -14,7 +14,6 @@ export const AllDocuments = () => {
   const [name, setName] = useState<string>("");
   const [languageIds, setLanguageIds] = useState<string>("");
   const [educationalInstitutionCategoryIds, setEducationalInstitutionCategoryIds] = useState<string>("");
-  console.log("filter", filter);
 
   const { data: language, isLoading: languageLoading } = useQuery("references/languages", () => getAllLanguages());
   const { data: educationalInstitutionCategories, isLoading: educationalInstitutionCategoriesLoading } = useQuery("references/educational-institution-categories", () => getAllEducationalInstitutionCategories());

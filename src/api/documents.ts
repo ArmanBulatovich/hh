@@ -7,8 +7,7 @@ export async function getAllDocuments(filter: any) {
   return await expressService.get(`documents?${languageIds}${educationalInstitutionCategoryIds}`).then((res) => res.data);
 }
 
-// export async function getFreelancerById(id: string) {
-//   const res = await expressService.get(`freelancer/${id}`);
-//   console.log("res.data")
-//   return res.data;
-// }
+export async function getDocumentById(id: string) {
+  const res = await expressService.get(`documents/${id}`);
+  return res.data;
+}

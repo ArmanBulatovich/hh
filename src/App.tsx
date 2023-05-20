@@ -19,6 +19,7 @@ import { GetTeachers } from "./pages/GetTeacher/GetTeachers";
 import { GetOneTeacher } from "./pages/GetTeacher/GetOneTeacher";
 import Balance from "./pages/Balance/Balance";
 import { AllDocuments } from "./pages/Documents/AllDocuments";
+import { Document } from "./pages/Documents/Document";
 import { MyUploadedDocuments } from "./pages/Documents/MyUploadedDocument";
 import { queryClient } from "./queryClient";
 
@@ -55,6 +56,7 @@ function App() {
                     <Route path='/documents/bought' element={<GetBoughtDocuments />} />
                     <Route path='/documents/uploaded' element={<MyUploadedDocuments />} />
                     <Route path='/documents' element={<AllDocuments />} />
+                    <Route path='/documents/:id' element={<Document />} />
                     <Route path='/balance' element={<Balance />} />
                   </Route>
                 }
@@ -66,6 +68,7 @@ function App() {
                     <Route path='/get-teachers/:id' element={<GetOneTeacher />} />
                     <Route path='/documents/bought' element={<GetBoughtDocuments />} />
                     <Route path='/documents' element={<AllDocuments />} />
+                    <Route path='/documents/:id' element={<Document />} />
                     <Route path='/balance' element={<Balance />} />
                   </Route>
                 }

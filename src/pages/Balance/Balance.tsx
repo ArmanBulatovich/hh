@@ -7,7 +7,6 @@ import { expressService } from '../../axiosConfig';
 import { getAccount } from '../../api/account';
 import { queryClient } from '../../queryClient';
 
-
 export default function Balance() {
   const tokenFromLocalStorage = localStorage.getItem("token");
   const { handleSubmit, register } = useForm();
