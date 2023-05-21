@@ -8,8 +8,7 @@ import { getAllVacancies } from '../../../api/vacancy'
 
 export default function Vacancies() {
   const navigate = useNavigate();
-  const { data: vacancies, isLoading: vacanciesLoading } = useQuery("vacancies", () => getAllVacancies());
-  console.log(vacancies);
+  const { data: vacancies, isLoading: vacanciesLoading } = useQuery("vacancy/own", () => getAllVacancies());
 
   return (
     <Box>
@@ -22,9 +21,9 @@ export default function Vacancies() {
                   <Text display="flex" fontSize={24} mb={5}>Vacancies</Text>
                 </Box>
                 {vacancies && vacancies?.data.map((item: any) => (
-                  <Box key={item.id} cursor="pointer" border="1px solid #FF5800" borderRadius="8px" p="12px 20px" height="auto" mb="16px" onClick={() => navigate(`${item.id}`)}>
+                  <Box key={item.id} border="1px solid #FF5800" borderRadius="8px" p="12px 20px" height="auto" mb="16px">
                     <Box display="flex" justifyContent="space-between" alignItems="center">
-                      <Text fontSize={20} fontWeight={500} color="blue">{item.name}</Text>
+                      <Text fontSize={20} fontWeight={500} color="blue" cursor="pointer" onClick={() => navigate(`${item.id}`)}>{item.name}</Text>
                       <Text fontSize={20} fontWeight={500}>{item.salary} {item.currency.name}</Text>
                     </Box>
                     <Box display="block">
