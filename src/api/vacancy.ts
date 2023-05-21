@@ -1,7 +1,6 @@
 import { expressService } from "../axiosConfig";
 
 export async function getAllDocuments(filter: any) {
-  // const name = filter?.name && filter?.name !== "" ? `&name=${filter?.name}` : "";
   const languageIds = filter?.languageIds && filter?.languageIds !== "" ? `&languageIds=${filter?.languageIds}` : "";
   const educationalInstitutionCategoryIds = filter?.educationalInstitutionCategoryIds && filter?.educationalInstitutionCategoryIds !== "" ? `&educationalInstitutionCategoryIds=${filter?.educationalInstitutionCategoryIds}` : "";
   return await expressService.get(`documents?${languageIds}${educationalInstitutionCategoryIds}`).then((res) => res.data);
@@ -12,7 +11,7 @@ export async function getDocumentById(id: string) {
   return res.data;
 }
 
-export async function buyDocument(id: string) {
-  const res = await expressService.post(`users/buy-document`, { documentId: id });
+export async function createVacancy(data: any) {
+  const res = await expressService.post('vacancy', data);
   return res.data;
 }

@@ -20,6 +20,7 @@ export const AddingAds = () => {
   const [types, setTypes] = useState<any>([]);
   const [categories, setCategories] = useState<any>([]);
   const [selectedSubjects, setSelectedSubjects] = useState<any>([]);
+  const [subSubjects, setSubSubjects] = useState<any>([]);
 
   useEffect(() => {
     expressService
@@ -52,7 +53,7 @@ export const AddingAds = () => {
       setOrgId(
         educationalInstitutionCategories.find((item: any) => item.code === org)
           .id
-      );
+      )
     }
     if (orgId) {
       expressService
@@ -60,35 +61,28 @@ export const AddingAds = () => {
         .then((res) => {
           setSubjects(res.data.data);
         });
-
-      expressService
-        .get(`references/subject-categories/${orgId}`, { headers: headers })
-        .then((res) => {
-          setCategories(res.data.data);
-        });
     }
+    expressService
+      .get(`references/document-categories`, { headers: headers })
+      .then((res) => {
+        setCategories(res.data.data);
+      });
   }, [org, orgId]);
 
   const onSubmit = (data: any) => {
-    const educationalInstitutionCategory =
-      educationalInstitutionCategories.find(
-        (item: any) => item.code === data.educationalInstitutionCategory
-      );
-    const currency = currencies.find(
-      (item: any) => item.code === data.currency
-    );
-    const language = languages.find((item: any) => item.code === data.language);
-    const type = types.find((item: any) => item.name === data.type);
-    const category = categories.find(
-      (item: any) => item.name === data.category
-    );
-    const subjects = selectedSubjects;
+    const educationalInstitutionCategory = { id: educationalInstitutionCategories.find((item: any) => item.code === data.educationalInstitutionCategory).id };
+    const currency = { id: currencies.find((item: any) => item.code === data.currency).id };
+    const language = { id: languages.find((item: any) => item.code === data.language).id };
+    const type = { id: types.find((item: any) => item.name === data.type).id };
+    const category = { id: categories.find((item: any) => item.name === data.category).id }
+    const subjects = selectedSubjects.map((item: any) => { return { id: item.id } });
     const price = Number(data.price);
     const url = "asd";
     expressService.post('documents', { ...data, educationalInstitutionCategory, currency, language, type, category, subjects, price, url }, { headers: headers })
       .then(res => {
         if (res.status === 200) {
           console.log("res.data: ", res.data);
+          alert("Document added successfully");
         }
       })
   };
@@ -140,11 +134,29 @@ export const AddingAds = () => {
             {orgId && (
               <>
                 <Box mt="30px">
-                  <Text fontSize="lg">Subjects:</Text>
+                  <Text fontSize="lg">Subject:</Text>
+                  <Select placeholder="Select subject" onChange={(event) => {
+                    setSubSubjects(
+                      subjects.find(
+                        (item: any) => item.name === event.target.value
+                      ).subjects
+                    );
+                  }}>
+                    {subjects.map((item: any) => {
+                      return (
+                        <option key={item.id} value={item.name}>
+                          {item.name}
+                        </option>
+                      );
+                    })}
+                  </Select>
+                </Box>
+                <Box mt="30px">
+                  <Text fontSize="lg">subSubjects:</Text>
                   <MultiSelect
                     closeMenuOnSelect={false}
                     components={animatedComponents}
-                    options={subjects}
+                    options={subSubjects}
                     onChange={setSelectedSubjects}
                     isMulti
                   />

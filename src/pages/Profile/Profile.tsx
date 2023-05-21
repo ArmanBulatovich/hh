@@ -93,11 +93,11 @@ export const Profile = () => {
             <Box display='flex' justifyContent='space-between'>
               <Box display='block' width='45%' paddingTop="16px">
                 <Text fontSize='lg'>Phone Number: </Text>
-                <Input defaultValue={initialState.phoneNumber} {...register("phoneNumber")} disabled />
+                <Input defaultValue={initialState?.phoneNumber} {...register("phoneNumber")} disabled />
               </Box>
               <Box display='block' width='45%' paddingTop="16px">
                 <Text fontSize='lg'>Email: </Text>
-                <Input defaultValue={initialState.email} {...register("email")} disabled />
+                <Input defaultValue={initialState?.email} {...register("email")} disabled />
               </Box>
             </Box>
             <Box display="flex" justifyContent="space-between">

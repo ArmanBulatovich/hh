@@ -95,19 +95,18 @@ export const GetOneTeacher = () => {
             </AccordionItem>
           </Accordion>
           <Box display="flex" justifyContent="center" mt={10}>
-            {
-              <Button
-              //   disabled={teacher?.salesAccess}
-              //   onClick={() => {
-              //     expressService.post(
-              //       "users/buy-document",
-              //       { teacherId: id },
-              //       { headers: headers }
-              //     );
-              //   }}
-              >
-                Buy contact of teacher
-              </Button>
+            {<Button
+            //   disabled={teacher?.salesAccess}
+            //   onClick={() => {
+            //     expressService.post(
+            //       "users/buy-document",
+            //       { teacherId: id },
+            //       { headers: headers }
+            //     );
+            //   }}
+            >
+              Buy contact of teacher
+            </Button>
             }
           </Box>
         </TableContainer>

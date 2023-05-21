@@ -22,6 +22,7 @@ import { AllDocuments } from "./pages/Documents/AllDocuments";
 import { Document } from "./pages/Documents/Document";
 import { MyUploadedDocuments } from "./pages/Documents/MyUploadedDocument";
 import { queryClient } from "./queryClient";
+import CreateVacancy from "./pages/Vacancy/CreateVacancy";
 
 
 function App() {
@@ -70,6 +71,7 @@ function App() {
                     <Route path='/documents' element={<AllDocuments />} />
                     <Route path='/documents/:id' element={<Document />} />
                     <Route path='/balance' element={<Balance />} />
+                    <Route path='/vacancy/create' element={<CreateVacancy />} />
                   </Route>
                 }
               </Route>
