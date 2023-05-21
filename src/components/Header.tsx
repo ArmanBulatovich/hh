@@ -92,6 +92,7 @@ export default function Header() {
                     localStorage.removeItem("role");
                     store.auth.isAuthenticated = false;
                     navigate("/login");
+                    // queryCache.clear();
                   }}
                 >Logout</MenuItem>
               </MenuGroup>

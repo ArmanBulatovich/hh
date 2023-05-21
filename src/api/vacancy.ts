@@ -15,3 +15,8 @@ export async function createVacancy(data: any) {
   const res = await expressService.post('vacancy', data);
   return res.data;
 }
+
+export async function getAllVacancies() {
+  const res = await expressService.get('vacancy');
+  return res.data;
+}

@@ -112,6 +112,6 @@ export const AllDocuments = () => {
           </Box>
         </Box>
       </Box>
-    </Box >
+    </Box>
   );
 };

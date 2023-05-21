@@ -3,9 +3,9 @@ import { Box, Button, Input, Select, Text, Textarea } from '@chakra-ui/react'
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 
-import { getAllWorkShcedules, experienceRanges, getAllEmploymentTypes, getAllCurrencies, getAllSubjectsByEduCategoryId } from '../../api/references';
-import { getAccount } from '../../api/account';
-import { createVacancy } from '../../api/vacancy';
+import { getAllWorkShcedules, experienceRanges, getAllEmploymentTypes, getAllCurrencies, getAllSubjectsByEduCategoryId } from '../../../api/references';
+import { getAccount } from '../../../api/account';
+import { createVacancy } from '../../../api/vacancy';
 
 export default function CreateVacancy() {
   const { handleSubmit, register } = useForm();
