@@ -16,7 +16,37 @@ export async function createVacancy(data: any) {
   return res.data;
 }
 
-export async function getAllVacancies() {
+export async function getAllOwnVacancies() {
   const res = await expressService.get('vacancy/own');
+  return res.data;
+}
+
+export async function getAllVacancies() {
+  const res = await expressService.get('vacancy');
+  return res.data;
+}
+
+export async function deleteVacancy(id: string) {
+  const res = await expressService.delete(`vacancy/${id}`);
+  return res.data;
+}
+
+export async function getVacancyById(id: string) {
+  const res = await expressService.get(`vacancy/${id}`);
+  return res.data;
+}
+
+export async function postVacancyRequest(data: any) {
+  const res = await expressService.post('vacancy-request/response', data);
+  return res.data;
+}
+
+export async function getAllStatuses() {
+  const res = await expressService.get('vacancy-request/statuses');
+  return res.data;
+}
+
+export async function getResponsesByCode(code: string) {
+  const res = await expressService.get(`vacancy-request/own/${code}`);
   return res.data;
 }

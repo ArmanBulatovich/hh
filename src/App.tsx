@@ -23,6 +23,9 @@ import { MyUploadedDocuments } from "./pages/Documents/MyUploadedDocument";
 import { queryClient } from "./queryClient";
 import CreateVacancy from "./pages/Vacancy/VUZ/CreateVacancy";
 import Vacancies from "./pages/Vacancy/VUZ/Vacancies";
+import TeacherVacancies from "./pages/Vacancy/Teacher/Vacancies";
+import Vacancy from "./pages/Vacancy/Teacher/Vacancy";
+import Responses from "./pages/Vacancy/Teacher/Responses";
 
 
 function App() {
@@ -58,6 +61,9 @@ function App() {
                     <Route path='/documents' element={<AllDocuments />} />
                     <Route path='/documents/:id' element={<Document />} />
                     <Route path='/balance' element={<Balance />} />
+                    <Route path='/vacancies' element={<TeacherVacancies />} />
+                    <Route path='/vacancies/:id' element={<Vacancy />} />
+                    <Route path="/vacancies/responses" element={<Responses />} />
                   </Route>}
                 {role === '\"educational_institution\"' &&
                   <Route>
