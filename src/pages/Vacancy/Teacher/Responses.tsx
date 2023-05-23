@@ -14,13 +14,13 @@ export default function Responses() {
           <Tab fontSize={20}>New</Tab>
         </TabList>
         <TabPanels>
-          <TabPanel border="1px solid red">
+          <TabPanel>
             <Refused />
           </TabPanel>
-          <TabPanel border="1px solid red">
+          <TabPanel>
             <Invited />
           </TabPanel>
-          <TabPanel border="1px solid red">
+          <TabPanel>
             <New />
           </TabPanel>
         </TabPanels>
