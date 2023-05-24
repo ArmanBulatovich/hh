@@ -1,7 +1,6 @@
-import { Box, Button, Icon, Text } from '@chakra-ui/react'
+import { Box, Text } from '@chakra-ui/react'
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 
 import { getAllOwnVacancies, deleteVacancy } from '../../../api/vacancy'
@@ -42,27 +41,9 @@ export default function Vacancies() {
                             }
                           }).catch((err) => {
                             alert("Error: " + err.message);
-                          }
-                          )
+                          })
                         }} />
                     </Box>
-
-
-                    {/* <Box display="block">
-                      <Text fontSize={16} width="50%" mt="8px">Description</Text>
-                      <Text fontSize={14} width="50%">{item.description}</Text>
-                      <Text fontSize={16} width="50%" mt="8px">Condition</Text>
-                      <Text fontSize={16}>{item.condition}</Text>
-                      <Text fontSize={16} width="50%" mt="8px">Requirement</Text>
-                      <Text fontSize={16}>{item.requirement}</Text>
-                      <Text fontSize={16} width="50%" mt="8px">Responsibility</Text>
-                      <Text fontSize={16}>{item.responsibility}</Text>
-                    </Box> */}
-                    {/* <Box display="flex" justifyContent="space-between" alignItems="center">
-                      <Button fontSize={20} fontWeight={500} color="white" backgroundColor="green" disabled>Respond</Button>
-                      <FcLikePlaceholder />
-                      <FcLike />
-                    </Box> */}
                   </Box>
                 ))}
               </Box>

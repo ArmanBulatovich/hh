@@ -373,14 +373,19 @@ const NAV_ITEMS_FOR_VUZ: Array<NavItem> = [
     label: "Vacancy",
     children: [
       {
-        label: 'All vacancies',
-        subLabel: 'All vacancies for contract work',
-        href: '/vacancies',
-      },
-      {
         label: 'Create vacancy',
         subLabel: 'Create vacancy for contract work',
         href: "/vacancy/create",
+      },
+      {
+        label: 'My vacancies',
+        subLabel: 'My vacancies for contract work',
+        href: '/vacancies',
+      },
+      {
+        label: 'Responses to my vacancy',
+        subLabel: 'Responses to my vacancy for contract work',
+        href: "/vacancies/responses",
       }
     ],
   },
@@ -415,8 +420,8 @@ const NAV_ITEMS_FOR_TEACHER: Array<NavItem> = [
     label: "Vacancy",
     children: [
       {
-        label: 'My vacancies',
-        subLabel: 'My vacancies for contract work',
+        label: 'All vacancies',
+        subLabel: 'All vacancies for contract work',
         href: '/vacancies',
       },
       {

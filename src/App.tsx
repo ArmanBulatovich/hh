@@ -26,7 +26,7 @@ import Vacancies from "./pages/Vacancy/VUZ/Vacancies";
 import TeacherVacancies from "./pages/Vacancy/Teacher/Vacancies";
 import Vacancy from "./pages/Vacancy/Teacher/Vacancy";
 import Responses from "./pages/Vacancy/Teacher/Responses";
-
+import ResponsesToVacancies from "./pages/Vacancy/VUZ/ResponsesToVacancies";
 
 function App() {
   const { isAuthenticated } = useSnapshot(store.auth);
@@ -65,6 +65,7 @@ function App() {
                     <Route path='/vacancies/:id' element={<Vacancy />} />
                     <Route path="/vacancies/responses" element={<Responses />} />
                   </Route>}
+
                 {role === '\"educational_institution\"' &&
                   <Route>
                     <Route path="/profile-vuz" element={<ProfileVUZ />} />
@@ -76,6 +77,7 @@ function App() {
                     <Route path='/balance' element={<Balance />} />
                     <Route path='/vacancy/create' element={<CreateVacancy />} />
                     <Route path='/vacancies' element={<Vacancies />} />
+                    <Route path='/vacancies/responses' element={<ResponsesToVacancies />} />
                   </Route>}
               </Route>
             )}
