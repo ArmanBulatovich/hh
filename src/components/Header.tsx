@@ -21,7 +21,6 @@ import {
   MenuButton,
   MenuGroup,
   MenuDivider,
-  Avatar,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -124,9 +123,9 @@ export default function Header() {
               fontSize={"sm"}
               fontWeight={600}
               color={"white"}
-              bg={"pink.400"}
+              bg={"purple.400"}
               _hover={{
-                bg: "pink.300",
+                bg: "purple.600",
               }}
             >
               Sign Up

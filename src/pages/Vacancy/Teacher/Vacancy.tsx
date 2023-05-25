@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Box, Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, Textarea, useDisclosure } from '@chakra-ui/react'
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
-import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 import { useForm } from 'react-hook-form';
 
 import { getAllVacancies, getVacancyById, postVacancyRequest } from '../../../api/vacancy'

@@ -22,7 +22,7 @@ export default function Register() {
     {
       onSuccess: (data) => {
         setRoles(data.data);
-      },
+      }
     }
   );
 
@@ -44,15 +44,12 @@ export default function Register() {
   };
 
   return (
-    <Flex minH={'90vh'} align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
+    <Flex minH={'103vh'} align={'center'} justify={'center'} bg={useColorModeValue('green.50', 'green.800')} mt="-100px">
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'} textAlign={'center'}>
             Sign up
           </Heading>
-          <Text fontSize={'lg'} color={'gray.600'}>
-            to enjoy all of our cool features ✌️
-          </Text>
         </Stack>
         <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
           <form onSubmit={handleSubmit}>

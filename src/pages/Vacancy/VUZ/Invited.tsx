@@ -6,7 +6,6 @@ import { Box } from '@chakra-ui/react';
 export default function Invited() {
   const { data: completedData, isLoading: completedDataLoading } = useQuery(`vacancy-request/own/complited`, () => getResponsesByCode('complited'));
   console.log("completed", completedData);
-
   return (
     <Box>
       <Box display="flex">

@@ -50,3 +50,13 @@ export async function getResponsesByCode(code: string) {
   const res = await expressService.get(`vacancy-request/own/${code}`);
   return res.data;
 }
+
+export async function acceptResponse(id: string) {
+  const res = await expressService.post(`vacancy-request/accept/${id}`);
+  return res.data;
+}
+
+export async function rejectResponse(id: string) {
+  const res = await expressService.post(`vacancy-request/reject/${id}`);
+  return res.data;
+}

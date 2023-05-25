@@ -1,8 +1,8 @@
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 
-// import Refused from './Refused';
-// import Invited from './Invited';
-// import New from './New';
+import Refused from './Refused';
+import Invited from './Invited';
+import New from './New';
 
 export default function ResponsesToVacancies() {
   return (
@@ -15,13 +15,13 @@ export default function ResponsesToVacancies() {
         </TabList>
         <TabPanels>
           <TabPanel>
-            {/* <Refused /> */}
+            <Refused />
           </TabPanel>
           <TabPanel>
-            {/* <Invited /> */}
+            <Invited />
           </TabPanel>
           <TabPanel>
-            {/* <New /> */}
+            <New />
           </TabPanel>
         </TabPanels>
       </Tabs>
