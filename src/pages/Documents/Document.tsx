@@ -8,6 +8,7 @@ export const Document = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { data: document, isLoading: documentLoading } = useQuery(["document", id], () => getDocumentById(id ? id : ""));
+console.log("document", document);
 
   const handleDownload = () => {
     if (document?.data?.url) {

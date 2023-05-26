@@ -17,6 +17,7 @@ export const GetBoughtDocuments = () => {
       setDocuments(res.data.data);
     });
   }, []);
+  console.log("documents", documents);
 
   return (
     <Box>
@@ -36,7 +37,7 @@ export const GetBoughtDocuments = () => {
                 </InputGroup>
               </Box>
               {documents.map((item: any) => (
-                <Box key={item.id} cursor="pointer" border="1px solid #FF5800" borderRadius="8px" p="12px 20px" height="auto" mb="16px" onClick={() => navigate(`${item.id}`)}>
+                <Box key={item.id} cursor="pointer" border="1px solid #FF5800" borderRadius="8px" p="12px 20px" height="auto" mb="16px" onClick={() => navigate(`/documents/${item?.document?.id}`)}>
                   <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Text fontSize={20} fontWeight={500}>{item.document.name}</Text>
                     <Text fontSize={20} fontWeight={500}>{item.price} $</Text>

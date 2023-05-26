@@ -16,3 +16,8 @@ export async function buyDocument(id: string) {
   const res = await expressService.post(`users/buy-document`, { documentId: id });
   return res.data;
 }
+
+export async function getBoughtDocumentById(id: string) {
+  const res = await expressService.get(`users/bought-document/${id}`);
+  return res.data;
+}

@@ -14,6 +14,7 @@ export default function CreateVacancy() {
   const { data: experiencesRange, isLoading: experiencesRangeLoading } = useQuery("references/experience-ranges", () => experienceRanges());
   const { data: employmentTypes, isLoading: employmentTypesLoading } = useQuery("references/employment-types", () => getAllEmploymentTypes());
   const { data: currencies, isLoading: currenciesLoading } = useQuery("references/currencies", () => getAllCurrencies());
+  console.log("currencies: ", currencies?.data);
   const { data: account } = useQuery("users/account", () => getAccount());
   const { data: subjects, isLoading: subjectsLoading } = useQuery(`references/subjects/id`,
     () => getAllSubjectsByEduCategoryId(account?.data?.account?.educationalInstitutionCategory?.id));

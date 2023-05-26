@@ -57,6 +57,7 @@ function App() {
                     <Route path="/profile-user" element={<Profile />} />
                     <Route path='/adding-ads' element={<AddingAds />} />
                     <Route path='/documents/bought' element={<GetBoughtDocuments />} />
+                    <Route path='/documents/bought/:id' element={<Document />} />
                     <Route path='/documents/uploaded' element={<MyUploadedDocuments />} />
                     <Route path='/documents' element={<AllDocuments />} />
                     <Route path='/documents/:id' element={<Document />} />
@@ -72,6 +73,7 @@ function App() {
                     <Route path='/get-teachers' element={<GetTeachers />} />
                     <Route path='/get-teachers/:id' element={<GetOneTeacher />} />
                     <Route path='/documents/bought' element={<GetBoughtDocuments />} />
+                    <Route path='/documents/bought/:id' element={<Document />} />
                     <Route path='/documents' element={<AllDocuments />} />
                     <Route path='/documents/:id' element={<Document />} />
                     <Route path='/balance' element={<Balance />} />

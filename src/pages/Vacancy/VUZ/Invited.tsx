@@ -14,16 +14,19 @@ export default function Invited() {
             completedData && completedData?.data?.length === 0 ? (<Box width="70%" textAlign="center" mt="10px">No vacancies</Box>) : (
               <Box width="70%" m="32px">
                 {completedData && completedData?.data?.map((item: any) => (
-                  <Box key={item.id} border="1px solid #FF5800" borderRadius="8px" p="12px 20px" height="auto" mb="16px">
-                    <Box display="flex" justifyContent="space-between" alignItems="center">
-                      <Box fontSize={20} fontWeight={500} color="blue" cursor="pointer">{item.vacancy?.name}</Box>
-                      <Box fontSize={20} fontWeight={500}>{item.vacancy?.salary} tenge</Box>
-                    </Box>
-                    <Box display="block">
-                      <Box fontSize={16} width="50%" mt="4px">{item.educationalInstitution?.name}</Box>
-                      <Box fontSize={16} width="50%" mt="4px">{item.educationalInstitution?.address}</Box>
-                    </Box>
-                  </Box>
+                   <Box key={item.id} border="1px solid #FF5800" borderRadius="8px" p="12px 20px" height="auto" mb="16px">
+                   <Box display="flex" justifyContent="space-between" alignItems="center">
+                     <Box fontSize={20} fontWeight={500} color="blue" cursor="pointer">{item.vacancy?.name}</Box>
+                     <Box fontSize={20} fontWeight={500}>{item.vacancy?.salary} tenge</Box>
+                   </Box>
+                   <Box display="flex" justifyContent="space-between" alignItems="center">
+                     <Box fontSize={20} fontWeight={500} color="green" cursor="pointer">{item.teacher?.name} {item.teacher?.middleName} {item.teacher?.lastName}</Box>
+                     <Box fontSize={20} fontWeight={500}>{item.teacher?.wantedPosition}</Box>
+                   </Box>
+                   <Box display="block">
+                     <Box fontSize={16} width="50%" mt="4px">{item.letter}</Box>
+                   </Box>
+                 </Box>
                 ))}
               </Box>
             ))}
