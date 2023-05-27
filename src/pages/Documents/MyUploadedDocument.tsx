@@ -39,11 +39,11 @@ export const MyUploadedDocuments = () => {
               {documents.map((item: any) => (
                 <Box key={item.id} cursor="pointer" border="1px solid #FF5800" borderRadius="8px" p="12px 20px" height="auto" mb="16px" onClick={() => navigate(`${item.id}`)}>
                   <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Text fontSize={20} fontWeight={500}>{item.document.name}</Text>
-                    <Text fontSize={20} fontWeight={500}>{item.price} $</Text>
+                    <Text fontSize={20} fontWeight={500}>{item?.name}</Text>
+                    <Text fontSize={20} fontWeight={500}>{item?.price} $</Text>
                   </Box>
                   <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Text fontSize={16} width="50%">{item.document.description}</Text>
+                    <Text fontSize={16} width="50%">{item.description}</Text>
                   </Box>
                   <Box display="flex" justifyContent="flex-end" alignItems="center">
                     <Text fontSize={14}>{item.updated_at.slice(0, 10)}</Text>

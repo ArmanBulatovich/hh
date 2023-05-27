@@ -21,3 +21,8 @@ export async function getBoughtDocumentById(id: string) {
   const res = await expressService.get(`users/bought-document/${id}`);
   return res.data;
 }
+
+export async function uploadFile(file: any) {
+  const res = await expressService.post(`file`, file);
+  return res.data;
+}

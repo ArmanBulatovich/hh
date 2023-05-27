@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import MultiSelect from 'react-select';
 import makeAnimated from 'react-select/animated';
+import { uploadFile } from "../../api/documents";
 
 import { expressService } from "../../axiosConfig";
 
@@ -21,6 +22,8 @@ export const AddingAds = () => {
   const [categories, setCategories] = useState<any>([]);
   const [selectedSubjects, setSelectedSubjects] = useState<any>([]);
   const [subSubjects, setSubSubjects] = useState<any>([]);
+  const [resUrl, setResUrl] = useState<any>("");
+  console.log("url", resUrl);
 
   useEffect(() => {
     expressService
@@ -69,6 +72,24 @@ export const AddingAds = () => {
       });
   }, [org, orgId]);
 
+  
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      const file = event.target.files?.[0];
+      if (file) {
+        const formData = new FormData();
+        console.log("file", file)
+        formData.append("file", file);
+        console.log("formData", formData);
+        const response = await uploadFile(formData);
+        console.log("response", response);
+        setResUrl(response.data.url);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const onSubmit = (data: any) => {
     const educationalInstitutionCategory = { id: educationalInstitutionCategories.find((item: any) => item.code === data.educationalInstitutionCategory).id };
     const currency = { id: currencies.find((item: any) => item.code === data.currency).id };
@@ -77,7 +98,7 @@ export const AddingAds = () => {
     const category = { id: categories.find((item: any) => item.name === data.category).id }
     const subjects = selectedSubjects.map((item: any) => { return { id: item.id } });
     const price = Number(data.price);
-    const url = "asd";
+    const url = resUrl;
     expressService.post('documents', { ...data, educationalInstitutionCategory, currency, language, type, category, subjects, price, url }, { headers: headers })
       .then(res => {
         if (res.status === 200) {
@@ -102,6 +123,10 @@ export const AddingAds = () => {
             <Box mt="30px">
               <Text>Add description</Text>
               <Input placeholder="Add description" {...register("description")} />
+            </Box>
+            <Box mt="30px">
+              <Text>Загрузить файл</Text>
+              <input type="file" name="file" onChange={handleFileUpload} />
             </Box>
             <Box mt="30px">
               <Text fontSize="lg">Educational institution of category:</Text>
