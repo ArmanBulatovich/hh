@@ -23,7 +23,6 @@ export const AddingAds = () => {
   const [selectedSubjects, setSelectedSubjects] = useState<any>([]);
   const [subSubjects, setSubSubjects] = useState<any>([]);
   const [resUrl, setResUrl] = useState<any>("");
-  console.log("url", resUrl);
 
   useEffect(() => {
     expressService
@@ -99,10 +98,10 @@ export const AddingAds = () => {
     const subjects = selectedSubjects.map((item: any) => { return { id: item.id } });
     const price = Number(data.price);
     const url = resUrl;
+
     expressService.post('documents', { ...data, educationalInstitutionCategory, currency, language, type, category, subjects, price, url }, { headers: headers })
       .then(res => {
         if (res.status === 200) {
-          console.log("res.data: ", res.data);
           alert("Document added successfully");
         }
       })

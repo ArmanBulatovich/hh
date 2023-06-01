@@ -4,6 +4,7 @@ import { Box, Button, Input, Select, Tab, TabList, TabPanel, TabPanels, Tabs, Te
 import { useQuery } from "react-query";
 
 import { expressService } from "../../axiosConfig";
+import { queryClient } from "../../queryClient";
 
 export const Profile = () => {
   const { handleSubmit, register } = useForm();
@@ -79,7 +80,7 @@ export const Profile = () => {
         if (res.status === 200) {
           setShowPlus(true);
           setAdd(false);
-          // setInitialState(res.data.data);
+          queryClient.invalidateQueries("users/account")
         }
       })
   }
@@ -103,37 +104,37 @@ export const Profile = () => {
             <Box display="flex" justifyContent="space-between">
               <Box display='block' width='45%' paddingTop="16px">
                 <Text fontSize='lg'>First name: </Text>
-                <Input defaultValue={initialState?.account.name} {...register("name", { required: true, minLength: 2 })} />
+                <Input defaultValue={initialState?.account?.name} {...register("name", { required: true, minLength: 2 })} />
               </Box>
               <Box display='block' width='45%' paddingTop="16px">
                 <Text fontSize='lg'>Last name: </Text>
-                <Input defaultValue={initialState?.account.lastName} {...register("lastName")} />
+                <Input defaultValue={initialState?.account?.lastName} {...register("lastName")} />
               </Box>
             </Box>
             <Box display="flex" justifyContent="space-between">
               <Box display='block' width='45%' paddingTop="16px">
                 <Text fontSize='lg'>Middle name: </Text>
-                <Input defaultValue={initialState?.account.middleName} {...register("middleName")} />
+                <Input defaultValue={initialState?.account?.middleName} {...register("middleName")} />
               </Box>
               <Box display='block' width='45%' paddingTop="16px">
                 <Text fontSize='lg'>Birth date: </Text>
-                <Input defaultValue={initialState?.account.birthdayDate.substring(0, 10)} {...register("birthdayDate")} />
+                <Input defaultValue={initialState?.account?.birthdayDate?.substring(0, 10)} {...register("birthdayDate")} />
               </Box>
             </Box>
             <Box display="flex" justifyContent="space-between">
               <Box display='block' width='45%' paddingTop="16px">
                 <Text fontSize='lg'>Wanted position: </Text>
-                <Input defaultValue={initialState?.account.wantedPosition} {...register("wantedPosition")} />
+                <Input defaultValue={initialState?.account?.wantedPosition} {...register("wantedPosition")} />
               </Box>
               <Box display='block' width='45%' paddingTop="16px">
                 <Text fontSize='lg'>About yourself: </Text>
-                <Input defaultValue={initialState?.account.aboutYourself} {...register("aboutYourself")} />
+                <Input defaultValue={initialState?.account?.aboutYourself} {...register("aboutYourself")} />
               </Box>
             </Box>
             <Box display="flex" justifyContent="space-between">
               <Box display='block' width='45%' paddingTop="16px">
                 <Text fontSize='lg'>Educational institution of category:</Text>
-                <Select defaultValue={initialState?.account.educationalInstitutionCategory.code}
+                <Select defaultValue={initialState?.account?.educationalInstitutionCategory?.code}
                   {...register("educationalInstitutionCategory")}
                 >
                   {educationalInstitutionCategories.map((item: any) => {
@@ -145,7 +146,7 @@ export const Profile = () => {
               </Box>
               <Box display='block' width='45%' paddingTop="16px">
                 <Text fontSize='lg'>Educational degrees:</Text>
-                <Select defaultValue={initialState?.account.educationDegrees} {...register("educationDegrees")}>
+                <Select defaultValue={initialState?.account?.educationDegrees} {...register("educationDegrees")}>
                   {educationDegrees.map((item: any) => {
                     return (
                       <option key={item.id} value={item.code}>{item.name}</option>
@@ -157,7 +158,7 @@ export const Profile = () => {
             <Box display="flex" justifyContent="space-between">
               <Box display='block' width='45%' paddingTop="16px">
                 <Text fontSize='lg'>Countries:</Text>
-                <Select defaultValue={initialState?.account.country} {...register("country")}>
+                <Select defaultValue={initialState?.account?.country} {...register("country")}>
                   {countries.map((item: any) => {
                     return (
                       <option key={item.id} value={item.id}>{item.name}</option>

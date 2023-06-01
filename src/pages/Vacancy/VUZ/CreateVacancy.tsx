@@ -35,6 +35,7 @@ export default function CreateVacancy() {
       alert("Error: " + err.message);
     });
   }
+  
   return (
     <Box>
       <Text textAlign="center" fontSize={20} fontWeight={500}>CreateVacancy</Text>

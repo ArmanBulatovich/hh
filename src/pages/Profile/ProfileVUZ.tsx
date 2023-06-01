@@ -96,7 +96,7 @@ export const ProfileVUZ = () => {
                 </Box>
                 <Box display="block" width="45%" paddingTop="16px">
                   <Text fontSize="lg">Email: </Text>
-                  <Input defaultValue={initialState.email} disabled />
+                  <Input defaultValue={initialState?.email} disabled />
                 </Box>
               </Box>
             )}
@@ -110,7 +110,7 @@ export const ProfileVUZ = () => {
                       Название ВУЗа
                     </Text>
                     <Input
-                      defaultValue={initialState.account.name}
+                      defaultValue={initialState?.account?.name}
                       {...register("name")}
                     />
                   </Box>
@@ -119,7 +119,7 @@ export const ProfileVUZ = () => {
                       Адрес ВУЗа
                     </Text>
                     <Input
-                      defaultValue={initialState.account.address}
+                      defaultValue={initialState?.account?.address}
                       {...register("address")}
                     />
                   </Box>
@@ -130,7 +130,7 @@ export const ProfileVUZ = () => {
                       Educational institution of category:
                     </Text>
                     <Select
-                      defaultValue={initialState.account.educationalInstitutionCategory.name}
+                      defaultValue={initialState?.account?.educationalInstitutionCategory?.name}
                       {...register("educationalInstitutionCategory")}
                     >
                       {educationalInstitutionCategories.map((item: any) => {
@@ -147,7 +147,7 @@ export const ProfileVUZ = () => {
                       Описание ВУЗа
                     </Text>
                     <Input
-                      defaultValue={initialState.account.aboutYourself}
+                      defaultValue={initialState?.account?.aboutYourself}
                       {...register("aboutYourself")}
                     />
                   </Box>
@@ -157,7 +157,7 @@ export const ProfileVUZ = () => {
                   <Box display="block" width="45%">
                     <Text fontSize="lg">Countries:</Text>
                     <Select
-                      defaultValue={initialState.account.country.name}
+                      defaultValue={initialState?.account?.country?.name}
                       {...register("country")}
                       onChange={(e) => {
                         setCountryId(e.target.value);
@@ -175,7 +175,7 @@ export const ProfileVUZ = () => {
                   <Box display="block" width="45%">
                     <Text fontSize="lg">Countries:</Text>
                     <Select
-                      defaultValue={initialState.account.city.name}
+                      defaultValue={initialState?.account?.city?.name}
                       {...register("city")}
                     >
                       {cities.map((item: any) => {

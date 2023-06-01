@@ -36,7 +36,7 @@ export default function Balance() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Box>
               <Box display='block' paddingTop="16px">
-                <Text fontSize="2xl">Balance: {account.data?.balance} tenge</Text>
+                <Text fontSize="2xl">Balance: {account?.data?.balance} tenge</Text>
                 <Input type="number" width="100%" value={balance} {...register("balance", { required: true })} onChange={(e: any) => setBalance(e.target.value)} />
               </Box>
             </Box>

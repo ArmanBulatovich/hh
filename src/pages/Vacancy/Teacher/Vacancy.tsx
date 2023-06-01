@@ -59,15 +59,15 @@ export default function Vacancy() {
                     </Box>
                     <Box display="flex" alignItems="center" mt="8px">
                       <Text fontSize={16} fontWeight={500} mr="4px">Experience range: </Text>
-                      <Text fontSize={14}>{vacancy?.data?.experienceRange.name}</Text>
+                      <Text fontSize={14}>{vacancy?.data?.experienceRange?.name}</Text>
                     </Box>
                     <Box display="flex" alignItems="center" mt="8px">
                       <Text fontSize={16} fontWeight={500} mr="4px">Subject category: </Text>
-                      <Text fontSize={14}>{vacancy?.data?.subjectCategory.name}</Text>
+                      <Text fontSize={14}>{vacancy?.data?.subjectCategory?.name}</Text>
                     </Box>
                     <Box display="flex" alignItems="center" mt="8px">
                       <Text fontSize={16} fontWeight={500} mr="4px">Work schedule: </Text>
-                      <Text fontSize={14}>{vacancy?.data?.workSchedule.name}</Text>
+                      <Text fontSize={14}>{vacancy?.data?.workSchedule?.name}</Text>
                     </Box>
                   </Box>{!vacancy?.data?.isResponse &&
                     <Box display="flex" justifyContent="flex-end" alignItems="center" mt="8px">
