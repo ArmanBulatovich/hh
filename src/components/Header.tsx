@@ -63,7 +63,7 @@ export default function Header() {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-          <Box onClick={() => navigate('/')} width="25px" height="25px" backgroundColor="red" borderRadius="12.5px" textAlign="center" color="white">Th</Box>
+          <Box onClick={() => navigate('/')} fontSize="20" mt="-4px" backgroundColor="white" borderRadius="12.5px" textAlign="center" color="black">th</Box>
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <DesktopNav />
           </Flex>
