@@ -61,11 +61,11 @@ export const GetOneTeacher = () => {
                 <>
                   <Tr>
                     <Td fontSize="18px">Email: </Td>
-                    <Td fontSize="18px">{teacher?.data?.info.email}</Td>
+                    <Td fontSize="18px">{teacher?.data?.info?.email}</Td>
                   </Tr>
                   <Tr>
                     <Td fontSize="18px">Phone number: </Td>
-                    <Td fontSize="18px">{teacher?.data?.info.phoneNumber}</Td>
+                    <Td fontSize="18px">{teacher?.data?.info?.phoneNumber}</Td>
                   </Tr>
                 </>
               )}
@@ -132,7 +132,9 @@ export const GetOneTeacher = () => {
             </AccordionItem>
           </Accordion>
           <Box display="flex" justifyContent="center" mt={10}>
-            {teacher?.data?.info === "null" && (
+            {
+            // teacher?.data?.info === "null" && 
+            (
               <Button
                 disabled={teacher?.data?.salesAccess}
                 onClick={() => {

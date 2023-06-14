@@ -27,7 +27,7 @@ export default function Login() {
     {
       onSuccess: (data) => {
         localStorage.setItem('token', data.data.accessToken);
-        store.auth.isAuthenticated = true;
+        store.auth.isAuthenticated = true; 
         localStorage.setItem('role', JSON.stringify(data.data.user.role.code));
       },
       onError: (error) => {
