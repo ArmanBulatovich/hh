@@ -29,12 +29,12 @@ export const MyUploadedDocuments = () => {
             <Box width="70%" mx="32px">
               <Box display="flex" justifyContent="space-between">
                 <Text display="flex" fontSize={24} mb={5}>Documents</Text>
-                <InputGroup size='md' width="70%">
+                {/* <InputGroup size='md' width="70%">
                   <Input pr='4.5rem' type='text' placeholder='Search by name' />
                   <InputRightElement width='2.5rem'>
                     <SearchIcon />
                   </InputRightElement>
-                </InputGroup>
+                </InputGroup> */}
               </Box>
               {documents.map((item: any) => (
                 <Box key={item.id} cursor="pointer" border="1px solid #FF5800" borderRadius="8px" p="12px 20px" height="auto" mb="16px" onClick={() => navigate(`${item.id}`)}>
@@ -51,7 +51,7 @@ export const MyUploadedDocuments = () => {
                 </Box>
               ))
               }</Box>
-            <Box width="30%" display="block">
+            {/* <Box width="30%" display="block">
               <Button rightIcon={openFilters ? <ChevronUpIcon /> : <ChevronDownIcon />} colorScheme='orange' variant='solid'
                 onClick={() => setOpenFilters(!openFilters)}>
                 Filter
@@ -90,7 +90,7 @@ export const MyUploadedDocuments = () => {
                   </Box>
                 </Box>
               }
-            </Box>
+            </Box> */}
           </Box>
         )}
       </Box>

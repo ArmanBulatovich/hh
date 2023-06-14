@@ -35,7 +35,7 @@ export const GetTeachers = () => {
           <Text fontSize={24}>
             Teachers
           </Text>
-          <InputGroup size='md' width="70%">
+          {/* <InputGroup size='md' width="70%">
             <Input
               pr='4.5rem'
               type='text'
@@ -44,7 +44,7 @@ export const GetTeachers = () => {
             <InputRightElement width='2.5rem'>
               <SearchIcon />
             </InputRightElement>
-          </InputGroup>
+          </InputGroup> */}
         </Box>
         <Box>
           {teachers.length === 0 ? (
@@ -69,11 +69,11 @@ export const GetTeachers = () => {
         </Box>
       </Box>
       <Box width="30%" display="block">
-        <Button rightIcon={openFilters ? <ChevronUpIcon /> : <ChevronDownIcon />} colorScheme='teal' variant='solid'
+        {/* <Button rightIcon={openFilters ? <ChevronUpIcon /> : <ChevronDownIcon />} colorScheme='teal' variant='solid'
           onClick={() => setOpenFilters(!openFilters)}>
           Filter
-        </Button>
-        {openFilters &&
+        </Button> */}
+        {/* {openFilters &&
           <Box width="80%">
             <Box mt="16px">
               <Text>Status</Text>
@@ -106,7 +106,7 @@ export const GetTeachers = () => {
               </Select>
             </Box>
           </Box>
-        }
+        } */}
       </Box>
     </Box >
   );

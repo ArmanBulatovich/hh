@@ -392,7 +392,7 @@ const NAV_ITEMS_FOR_VUZ: Array<NavItem> = [
 
 const NAV_ITEMS_FOR_TEACHER: Array<NavItem> = [
   {
-    label: "Adding Ads",
+    label: "Adding Documents",
     href: "/adding-ads",
   },
   {
@@ -430,4 +430,4 @@ const NAV_ITEMS_FOR_TEACHER: Array<NavItem> = [
       }
     ],
   },
-];
+]
